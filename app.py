@@ -328,26 +328,18 @@ if ss.stage > 0:
         with st.expander("",expanded=True):
             st.markdown(improved_resume)
         # Button to trigger PDF download
-        st.button('Download', on_click=set_stage, args = (2,))
-        if ss.stage > 1:
-            # Save the HTML as PDF using pdfkit
-            html_text = markdown2.markdown(improved_resume)
-            # Path to wkhtmltopdf executable
-            wkhtmltopdf_path = subprocess.check_output(['which', 'wkhtmltopdf'], universal_newlines=True).strip()
-            if not os.path.isfile(wkhtmltopdf_path):
-                raise FileNotFoundError("wkhtmltopdf executable not found at %s" % wkhtmltopdf_path)
-            # Configure pdfkit to use the binary
-            config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
-            pdf_file_path = 'output.pdf'
-            # Generate PDF from HTML
-            try:
-                pdfkit.from_string(html_text, pdf_file_path)
-            except Exception as e:
-                st.error("An error occurred while generating the PDF.")
-                st.write(e)
-            # Provide the PDF as a download
-            with open(pdf_file_path, 'rb') as pdf_file:
-                st.download_button(label="Download PDF", data=pdf_file, file_name="output.pdf", mime="application/pdf")
+        # Save the HTML as PDF using pdfkit
+        html_text = markdown2.markdown(improved_resume)
+        # Path to wkhtmltopdf executable
+        wkhtmltopdf_path = subprocess.check_output(['which', 'wkhtmltopdf'], universal_newlines=True).strip()
+        # Configure pdfkit to use the binary
+        config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
+        pdf_file_path = 'ImprovedResume.pdf'
+        # Generate PDF from HTML
+        pdfkit.from_string(html_text, pdf_file_path)
+        # Provide the PDF as a download
+        with open(pdf_file_path, 'rb') as pdf_file:
+            st.download_button(label="Download PDF", data=pdf_file, file_name="output.pdf", mime="application/pdf")
         st.markdown("#### 4. A few comments about your resume")
         st.write(comments_resume)
 
