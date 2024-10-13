@@ -329,7 +329,19 @@ if ss.stage > 0:
             st.markdown(improved_resume)
         # Button to trigger PDF download
         # Save the HTML as PDF using pdfkit
-        html_text = markdown2.markdown(improved_resume)
+        html_body = markdown2.markdown(improved_resume)
+        html_text = f"""<!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Improved Resume</title>
+        </head>
+        <body>
+            {html_body}
+        </body>
+        </html>"""
         # Path to wkhtmltopdf executable
         wkhtmltopdf_path = subprocess.check_output(['which', 'wkhtmltopdf'], universal_newlines=True).strip()
         # Configure pdfkit to use the binary
