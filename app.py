@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 from streamlit import session_state as ss
 import PyPDF2
@@ -323,8 +324,12 @@ if ss.stage > 0:
             # Save the HTML as PDF using pdfkit
             html_text = markdown2.markdown(improved_resume)
             # Path to wkhtmltopdf executable
-            path_to_wkhtmltopdf = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
-            config = pdfkit.configuration(wkhtmltopdf=path_to_wkhtmltopdf)
+            # Path to wkhtmltopdf binary
+            wkhtmltopdf_path = os.path.join(os.getcwd(), 'wkhtmltopdf', 'bin', 'wkhtmltopdf')
+            if not os.path.isfile(wkhtmltopdf_path):
+                raise FileNotFoundError("wkhtmltopdf executable not found at %s" % wkhtmltopdf_path)
+            # Configure pdfkit to use the binary
+            config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
 
             pdf_file_path = 'tmp/output.pdf'  # Adjust this path as needed
             # Generate PDF from HTML
