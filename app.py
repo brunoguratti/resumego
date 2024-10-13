@@ -25,10 +25,6 @@ import markdown2
 import subprocess
 
 nltk.download('stopwords')
-@st.cache_resource
-def download_en_core_web_sm():
-    subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"])
-download_en_core_web_sm()
 nlp = spacy.load("en_core_web_sm")
 
 # Load API keys
