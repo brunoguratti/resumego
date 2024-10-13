@@ -22,9 +22,10 @@ import json
 import plotly.graph_objects as go
 import pdfkit
 import markdown2
-import subprocess
 
 nltk.download('stopwords')
+nltk.download('punkt_tab')
+
 nlp = spacy.load("en_core_web_sm")
 
 # Load API keys
