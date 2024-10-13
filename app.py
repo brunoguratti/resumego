@@ -109,15 +109,15 @@ def get_resume_and_comments(text, delimiter='---'):
 def get_score(resume_text, job_desc_text):
     resume_embedding = model.encode(resume_text)
     job_desc_embedding = model.encode(job_desc_text)
-    client.recreate_collection(
+    qdrant_client.recreate_collection(
         collection_name="resume_collection",
         vectors_config=rest.VectorParams(size=len(resume_embedding), distance="Cosine"),
     )
-    client.upsert(
+    qdrant_client.upsert(
         collection_name="resume_collection",
         points=[{"id": 1, "vector": resume_embedding, "payload": {"text": resume_text}}],
     )
-    search_result = client.search(
+    search_result = qdrant_client.search(
         collection_name="resume_collection", query_vector=job_desc_embedding, limit=1
     )
     return search_result[0].score
