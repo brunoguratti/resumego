@@ -176,42 +176,7 @@ Your responsibilities include:
      - **Highlight the strong points** where the resume aligns well with the job description.
      - **Critique the weak points**, offering suggestions for improvement where the resume could better match the job description or address gaps in qualifications.
      - **Suggestions for improvement**, providing constructive feedback on how the candidate can enhance their resume to better match the job requirements.
----
 
-**Output Format**:
-
-The resume must be returned in the following Markdown structure:
-    
-## **John Doe**
-Toronto, ON | +1234567890 | **[john.doe@example.com](john.doe@example.com)** | **[linkedin.com/in/johndoe](https://linkedin.com/in/johndoe)**
-
-### **SUMMARY**
-Experienced software engineer with 5+ years in backend development...
-
-### **SKILLS**
-- **Programming language**: Python, SQL
-- **Frameworks**: Django, Flask
-- **Cloud Platforms**: AWS, GCP 
-- **Databases**: MySQL, PostgreSQL
-
-### **WORK EXPERIENCE**
-**Senior Software Engineer**, ABC Corp (Toronto, ON) | **Jan 2020 - Present**
-- Led a team of 5 engineers...
-- Improved system performance by 25%...
-
-**Software Developer**, XYZ Inc. (Vancouver, BC) | **Mar 2017 - Dec 2019**
-- Developed a high-traffic e-commerce platform...
-
-### **EDUCATION**
-**B.Sc. in Computer Science**, University of Technology (Vancouver, BC) | **2016**
-
-### **PROJECTS**
-**E-commerce Platform** (2020)
-- **Tech**: Python, Django, AWS
-- **Description**: Built a scalable e-commerce platform...
-
-### **CERTIFICATIONS**
-- AWS Certified Solutions Architect - Associate (2019)
 
 """
     },
@@ -347,8 +312,8 @@ if ss.stage > 0:
         # Configure pdfkit to use the binary
         config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
         options = {
-        'margin-top': '20mm',
-        'margin-bottom': '20mm',
+        'margin-top': '15mm',
+        'margin-bottom': '15mm',
         'margin-left': '15mm',
         'margin-right': '15mm',
         'encoding': 'UTF-8'
