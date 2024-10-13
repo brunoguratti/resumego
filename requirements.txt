@@ -1,0 +1,12 @@
+PyPDF2
+spacy
+nltk
+sentence-transformers
+qdrant-client
+annotated-text
+openai
+rake-nltk
+jsonlib-python3
+plotly
+pdfkit
+markdown2

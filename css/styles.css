@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+/* General Styling for the Streamlit App */
+
+.block-container {
+    padding-top: 4rem;
+    padding-bottom: 10rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+
+.stButton>button {
+    background-color: #e4002b !important;
+    color: white !important;
+    font-weight: 600 !important;
+    border-radius: 5px !important;
+    padding: 0.5em 1em !important;
+}
+
+.st-emotion-cache-1e965aw.e1nzilvr5 {
+    font-family: 'League Spartan', sans-serif !important;
+    color: white !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+}
+
+
+body {
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header (h1) Styling */
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700; /* SemiBold weight */
+    font-size: 32px; /* Size */
+    color: #000; /* You can change the color as needed */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Subheader (h2) Styling with Chiclet Effect */
+h4 {
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 700; /* Adjust this weight as needed */
+    background-color: #e4002b; /* Chiclet effect background */
+    color: white;
+    padding: 10px 15px; /* Chiclet padding */
+    border-radius: 5px; /* Rounded corners for chiclet effect */
+    display: inline-block; /* Ensures background only covers text */
+    margin-bottom: 0px;
+    margin-top: 10px;
+}
+
+/* Streamlit Container Styling */
+.stApp {
+    max-width: 900px;
+    margin: auto;
+    padding: 0px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
