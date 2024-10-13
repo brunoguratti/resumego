@@ -178,7 +178,6 @@ Your responsibilities include:
      - **Critique the weak points**, offering suggestions for improvement where the resume could better match the job description or address gaps in qualifications.
      - **Suggestions for improvement**, providing constructive feedback on how the candidate can enhance their resume to better match the job requirements.
 
-
 """
     },
     {
@@ -296,18 +295,6 @@ if ss.stage > 0:
         # Button to trigger PDF download
         # Save the HTML as PDF using pdfkit
         html_body = markdown2.markdown(improved_resume)
-        html_text = f"""<!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Improved Resume</title>
-        </head>
-        <body>
-            {html_body}
-        </body>
-        </html>"""
         # Path to wkhtmltopdf executable
         wkhtmltopdf_path = subprocess.check_output(['which', 'wkhtmltopdf'], universal_newlines=True).strip()
         # Configure pdfkit to use the binary
@@ -321,10 +308,10 @@ if ss.stage > 0:
         }
         pdf_file_path = 'ImprovedResume.pdf'
         # Generate PDF from HTML
-        pdfkit.from_string(html_text, pdf_file_path, options=options)
+        pdfkit.from_string(html_body, pdf_file_path, options=options)
         # Provide the PDF as a download
         with open(pdf_file_path, 'rb') as pdf_file:
-            st.download_button(label="Download", data=pdf_file, file_name="output.pdf", mime="application/pdf")
+            st.download_button(label="Download", data=pdf_file, file_name="ImprovedResume.pdf", mime="application/pdf")
         st.markdown("#### 4. A few comments about your resume")
         st.write(comments_resume)
 
