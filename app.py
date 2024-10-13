@@ -385,7 +385,7 @@ if ss.stage > 0:
             annotated_text(*resume_annotations)
     else:
         st.error("Please upload a resume and paste a job description.")
-st.markdown("\n\n\n")
+st.markdown("\n\n\n\n")
 logo = "assets/images/bganal_bw.png"
 c1, c2, c3, c4, c5 = st.columns(5)
 with c3:
