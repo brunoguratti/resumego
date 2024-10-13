@@ -338,10 +338,13 @@ if ss.stage > 0:
                 raise FileNotFoundError("wkhtmltopdf executable not found at %s" % wkhtmltopdf_path)
             # Configure pdfkit to use the binary
             config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
-
-            pdf_file_path = 'tmp/output.pdf'  # Adjust this path as needed
+            pdf_file_path = 'tmp/output.pdf'
             # Generate PDF from HTML
-            pdfkit.from_string(html_text, pdf_file_path)
+            try:
+                pdfkit.from_string(html_text, pdf_file_path)
+            except Exception as e:
+                st.error("An error occurred while generating the PDF.")
+                st.write(e)
             # Provide the PDF as a download
             with open(pdf_file_path, 'rb') as pdf_file:
                 st.download_button(label="Download PDF", data=pdf_file, file_name="output.pdf", mime="application/pdf")
