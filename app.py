@@ -168,7 +168,8 @@ Your responsibilities include:
      - Do not alter, fabricate, or invent new skills or experiences not present in the original resume.
 
 3. **Formatting**:
-   - Follow a structured Markdown format for the revised resume using headers (`#`, `##`, `###`) for each section. Ensure a clean and professional layout.
+   - Follow a structured Markdown format for the revised resume using headers (`#`, `##`, `###`) for each section.
+   - Try not to change the original layout of the resume too much, but feel free to make minor adjustments for clarity and readability.
 
 4. **Strengths and Weak Points**:
    - At the end of the resume, provide feedback:
