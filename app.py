@@ -387,6 +387,6 @@ if ss.stage > 0:
         st.error("Please upload a resume and paste a job description.")
 st.markdown("\n\n")
 logo = "assets/images/bganal_bw.png"
-left_co, cent_co,last_co = st.columns(5)
-with cent_co:
+c1, c2, c3, c4, c5 = st.columns(5)
+with c3:
     st.image(logo)
