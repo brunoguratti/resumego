@@ -1,3 +1,4 @@
+import subprocess
 import os
 import streamlit as st
 from streamlit import session_state as ss
@@ -258,14 +259,7 @@ load_css('css/styles.css')
 
 st.image("assets/images/resumego_logo_app.png")
 
-import subprocess
 
-# Run 'which wkhtmltopdf' to find the path to wkhtmltopdf
-try:
-    wkhtmltopdf_path = subprocess.check_output(['which', 'wkhtmltopdf'], universal_newlines=True).strip()
-    st.write(f"wkhtmltopdf is located at: {wkhtmltopdf_path}")
-except subprocess.CalledProcessError:
-    st.write("wkhtmltopdf is not installed or not found in the system path.")
 
 st.markdown("# Does your resume show your true potential to recruiters?")
 st.write("Provide us your resume and job description and watch as **resumego.** closes the gap for the perfect fit.")
@@ -339,12 +333,11 @@ if ss.stage > 0:
             # Save the HTML as PDF using pdfkit
             html_text = markdown2.markdown(improved_resume)
             # Path to wkhtmltopdf executable
-            # Path to wkhtmltopdf binary
-            # wkhtmltopdf_path = os.path.join(os.getcwd(), 'wkhtmltopdf', 'bin', 'wkhtmltopdf')
-            # if not os.path.isfile(wkhtmltopdf_path):
-            #     raise FileNotFoundError("wkhtmltopdf executable not found at %s" % wkhtmltopdf_path)
-            # # Configure pdfkit to use the binary
-            # config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
+            wkhtmltopdf_path = subprocess.check_output(['which', 'wkhtmltopdf'], universal_newlines=True).strip()
+            if not os.path.isfile(wkhtmltopdf_path):
+                raise FileNotFoundError("wkhtmltopdf executable not found at %s" % wkhtmltopdf_path)
+            # Configure pdfkit to use the binary
+            config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
 
             pdf_file_path = 'tmp/output.pdf'  # Adjust this path as needed
             # Generate PDF from HTML
