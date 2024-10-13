@@ -331,9 +331,9 @@ if ss.stage > 0:
             html_text = markdown2.markdown(improved_resume)
             # Path to wkhtmltopdf executable
             # Path to wkhtmltopdf binary
-            wkhtmltopdf_path = os.path.join(os.getcwd(), 'wkhtmltopdf', 'bin', 'wkhtmltopdf')
-            if not os.path.isfile(wkhtmltopdf_path):
-                raise FileNotFoundError("wkhtmltopdf executable not found at %s" % wkhtmltopdf_path)
+            wkhtmltopdf_path = "/app/bin/wkhtmltopdf"
+            # if not os.path.isfile(wkhtmltopdf_path):
+            #     raise FileNotFoundError("wkhtmltopdf executable not found at %s" % wkhtmltopdf_path)
             # Configure pdfkit to use the binary
             config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
 
