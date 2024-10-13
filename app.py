@@ -346,9 +346,16 @@ if ss.stage > 0:
         wkhtmltopdf_path = subprocess.check_output(['which', 'wkhtmltopdf'], universal_newlines=True).strip()
         # Configure pdfkit to use the binary
         config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
+        options = {
+        'margin-top': '20mm',
+        'margin-bottom': '20mm',
+        'margin-left': '15mm',
+        'margin-right': '15mm',
+        'encoding': 'UTF-8'
+        }
         pdf_file_path = 'ImprovedResume.pdf'
         # Generate PDF from HTML
-        pdfkit.from_string(html_text, pdf_file_path)
+        pdfkit.from_string(html_text, pdf_file_path, options=options)
         # Provide the PDF as a download
         with open(pdf_file_path, 'rb') as pdf_file:
             st.download_button(label="Download", data=pdf_file, file_name="output.pdf", mime="application/pdf")
