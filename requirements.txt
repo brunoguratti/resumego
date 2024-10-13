@@ -9,3 +9,4 @@ jsonlib-python3
 plotly
 pdfkit
 markdown2
+st-annotated-text
