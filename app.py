@@ -174,7 +174,8 @@ Your responsibilities include:
    - At the end of the resume, provide feedback:
      - **Highlight the strong points** where the resume aligns well with the job description.
      - **Critique the weak points**, offering suggestions for improvement where the resume could better match the job description or address gaps in qualifications.
-     - **Suggestions for improvement**, providing constructive feedback on how the candidate can enhance their resume to better match the job requirements.
+5. **Suggestions for improvement**
+   - Provide constructive feedback on how the candidate can enhance their resume to better match the job requirements.
 
 """
     },
