@@ -24,6 +24,7 @@ import plotly.graph_objects as go
 import pdfkit
 import markdown2
 
+
 nltk.download('stopwords')
 nltk.download('punkt_tab')
 
@@ -384,3 +385,8 @@ if ss.stage > 0:
             annotated_text(*resume_annotations)
     else:
         st.error("Please upload a resume and paste a job description.")
+
+logo = "assets/images/bganal_bw.png"
+left_co, cent_co,last_co = st.columns(3)
+with cent_co:
+    st.image(logo)
