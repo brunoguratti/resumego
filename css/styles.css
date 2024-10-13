@@ -9,7 +9,7 @@
     padding-right: 3rem;
 }
 
-.stButton>button {
+.stButton>button, .stDownloadButton>button {
     background-color: #e4002b !important;
     color: white !important;
     font-weight: 600 !important;

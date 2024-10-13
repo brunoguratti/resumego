@@ -339,7 +339,7 @@ if ss.stage > 0:
         pdfkit.from_string(html_text, pdf_file_path)
         # Provide the PDF as a download
         with open(pdf_file_path, 'rb') as pdf_file:
-            st.download_button(label="Download PDF", data=pdf_file, file_name="output.pdf", mime="application/pdf")
+            st.download_button(label="Download", data=pdf_file, file_name="output.pdf", mime="application/pdf")
         st.markdown("#### 4. A few comments about your resume")
         st.write(comments_resume)
 
