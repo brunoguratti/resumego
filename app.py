@@ -22,17 +22,25 @@ import json
 import plotly.graph_objects as go
 import pdfkit
 import markdown2
-
+import subprocess
 
 nltk.download('stopwords')
-
-# Load spaCy's small English model
-spacy.cli.download("en_core_web_sm")
+@st.cache_resource
+def download_en_core_web_sm():
+    subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"])
+download_en_core_web_sm()
 nlp = spacy.load("en_core_web_sm")
+
+# Load API keys
+qdrant_api = st.secrets["qdrant_api_key"]
+openai_key=st.secrets["openai_api_key"]
 
 # Initialize Qdrant and SentenceTransformer
 model = SentenceTransformer("BAAI/bge-base-en")
-client = QdrantClient(host="localhost", port=6333)
+qdrant_client = QdrantClient(
+    url="https://9817dd27-777f-45cb-9bfe-78a2a8e14b88.europe-west3-0.gcp.cloud.qdrant.io:6333", 
+    api_key=qdrant_api,
+)
 
 # Load the list of skills
 with open('data/skills.json') as f:
