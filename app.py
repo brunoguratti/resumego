@@ -27,6 +27,7 @@ import markdown2
 nltk.download('stopwords')
 
 # Load spaCy's small English model
+spacy.cli.download("en_core_web_sm")
 nlp = spacy.load("en_core_web_sm")
 
 # Initialize Qdrant and SentenceTransformer
