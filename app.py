@@ -376,7 +376,7 @@ if ss.stage > 0:
             fig.update_layout(
                 width=400,
                 height=180,
-                margin=dict(l=20, r=30, t=20, b=5),
+                margin=dict(l=30, r=40, t=20, b=5),
             )
 
             # Display the gauge in Streamlit
