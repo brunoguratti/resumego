@@ -24,6 +24,7 @@ import plotly.graph_objects as go
 import pdfkit
 import markdown2
 import cohere
+import numpy as np
 
 
 nltk.download('stopwords')
@@ -118,32 +119,9 @@ def get_score(resume_string, job_description_string):
     resume_embedding = emb_model.encode(resume_string)
     jd_embedding = emb_model.encode(job_description_string)
 
-    # Create a collection if it doesn't exist, and set the vectors config
-    qdrant_client.recreate_collection(
-        collection_name="demo_collection",
-        vectors_config=rest.VectorParams(size=len(resume_embedding), distance="Cosine"),  # Set size and distance metric
-    )
+    cosine_similarity = np.dot(resume_embedding, jd_embedding) / (np.linalg.norm(resume_embedding) * np.linalg.norm(jd_embedding))
 
-    # Add resume embedding to Qdrant collection
-    qdrant_client.upsert(
-        collection_name="demo_collection",
-        points=[
-            {
-                "id": 1,
-                "vector": resume_embedding,
-                "payload": {"text": resume_string},
-            }
-        ]
-    )
-
-    # Query Qdrant with job description embedding
-    search_result = qdrant_client.search(
-        collection_name="demo_collection",
-        query_vector=jd_embedding,
-        limit=1  # Get the most similar document
-    )
-    
-    return search_result[0].score
+    return cosine_similarity
 
 # Function to send resume and job description to OpenAI API for improvement
 
