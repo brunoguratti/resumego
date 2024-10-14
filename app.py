@@ -1,5 +1,6 @@
 import subprocess
-import os
+import base64
+import io
 import streamlit as st
 from streamlit import session_state as ss
 import PyPDF2
@@ -10,12 +11,9 @@ from spacy.matcher import PhraseMatcher
 from spacy.tokens import Span
 import re
 import nltk
-from collections import Counter
 from nltk.corpus import stopwords
 from nltk import word_tokenize
 from sentence_transformers import SentenceTransformer
-from qdrant_client import QdrantClient
-from qdrant_client.http import models as rest
 from annotated_text import annotated_text
 from openai import OpenAI
 from rake_nltk import Rake
@@ -26,8 +24,7 @@ import markdown2
 import cohere
 import numpy as np
 from PIL import Image
-import base64
-import io
+
 
 nltk.download('stopwords')
 nltk.download('punkt_tab')
@@ -119,10 +116,6 @@ def get_score(resume_string, job_description_string):
     cosine_similarity = np.dot(resume_embedding, jd_embedding) / (np.linalg.norm(resume_embedding) * np.linalg.norm(jd_embedding))
 
     return cosine_similarity
-
-# Function to send resume and job description to OpenAI API for improvement
-
-openai_key=st.secrets["openai_api_key"]
 
 @st.cache_data(show_spinner=False)
 def get_gpt_response(messages, model="gpt-4o-mini", temperature=0.2, top_p=0.1):
