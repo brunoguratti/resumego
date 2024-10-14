@@ -365,7 +365,7 @@ if ss.stage > 0:
         st.write(comments_resume)
 
         # Get score
-        # score = get_score(resume_text, job_description)*100
+        score = get_score(resume_text, job_description)*100
         st.markdown("#### 5. Performance analysis")
         
         # # Create two columns with the specified width
