@@ -182,45 +182,45 @@ Your responsibilities include:
 
 3. **Formatting**:
    - Follow a structured Markdown format for the revised resume using headers (`#`, `##`, `###`) for each section.
-    **Output Format**:
+**Output Format**:
 
-    The resume must be returned in the following Markdown structure:
-        
-    # John Doe
-    Toronto, ON | +1234567890 | **[john.doe@example.com](john.doe@example.com)** | **[linkedin.com/in/johndoe](https://linkedin.com/in/johndoe)**
+The resume must be returned in the following Markdown structure:
+    
+# John Doe
+Toronto, ON | +1234567890 | **[john.doe@example.com](john.doe@example.com)** | **[linkedin.com/in/johndoe](https://linkedin.com/in/johndoe)**
 
-    ## SUMMARY
-    Experienced software engineer with 5+ years in backend development...
+## SUMMARY
+Experienced software engineer with 5+ years in backend development...
 
-    ## SKILLS
-    - **Programming language**: Python, SQL | **Frameworks**: Django, Flask
-    - **Cloud Platforms**: AWS, GCP | **Databases**: MySQL, PostgreSQL
+## SKILLS
+- **Programming language**: Python, SQL | **Frameworks**: Django, Flask
+- **Cloud Platforms**: AWS, GCP | **Databases**: MySQL, PostgreSQL
 
-    ## WORK EXPERIENCE
-    **Senior Software Engineer**, ABC Corp (Toronto, ON) | **Jan 2020 - Present**
-    - Led a team of 5 engineers...
-    - Improved system performance by 25%...
+## WORK EXPERIENCE
+**Senior Software Engineer**, ABC Corp (Toronto, ON) | **Jan 2020 - Present**
+- Led a team of 5 engineers...
+- Improved system performance by 25%...
 
-    **Software Developer**, XYZ Inc. (Vancouver, BC) | **Mar 2017 - Dec 2019**
-    - Developed a high-traffic e-commerce platform...
+**Software Developer**, XYZ Inc. (Vancouver, BC) | **Mar 2017 - Dec 2019**
+- Developed a high-traffic e-commerce platform...
 
-    ## EDUCATION
-    **B.Sc. in Computer Science**, University of Technology (Vancouver, BC) | **2016**
+## EDUCATION
+**B.Sc. in Computer Science**, University of Technology (Vancouver, BC) | **2016**
 
-    ## PROJECTS
-    ### E-commerce Platform (2020)
-    - **Tech**: Python, Django, AWS
-    - **Description**: Built a scalable e-commerce platform...
+## PROJECTS
+### E-commerce Platform (2020)
+- **Tech**: Python, Django, AWS
+- **Description**: Built a scalable e-commerce platform...
 
-    ## CERTIFICATIONS
-    - AWS Certified Solutions Architect - Associate (2019)   
-    4. **Strengths and Weak Points**:
-    - At the end of the resume, provide feedback:
-        - **Highlight the strong points** where the resume aligns well with the job description.
-        - **Critique the weak points**, offering suggestions for improvement where the resume could better match the job description or address gaps in qualifications.
-    5. **Suggestions for improvement**
-    - Provide constructive feedback on how the candidate can enhance their resume to better match the job requirements.
----
+## CERTIFICATIONS
+- AWS Certified Solutions Architect - Associate (2019)   
+
+4. **Strengths and Weak Points**:
+   - At the end of the resume, add a delimiter (---) and provide feedback:
+     - **Highlight the strong points** where the resume aligns well with the job description.
+     - **Critique the weak points**, offering suggestions for improvement where the resume could better match the job description or address gaps in qualifications.
+5. **Suggestions for improvement**
+   - Provide constructive feedback on how the candidate can enhance their resume to better match the job requirements.
    
 """
     },
