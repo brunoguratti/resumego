@@ -375,7 +375,7 @@ if ss.stage > 0:
             # Define figure size in the layout
             fig.update_layout(
                 width=400,
-                height=140,
+                height=200,
                 margin=dict(l=20, r=30, t=20, b=5),
             )
 
