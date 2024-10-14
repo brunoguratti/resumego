@@ -135,7 +135,7 @@ def get_gpt_response(messages, model="gpt-4o-mini", temperature=0.2, top_p=0.1):
     return chat_completion.choices[0].message.content
 
 @st.cache_data(show_spinner=False)
-def get_cohere_response(messages, model="command-r-plus-08-2024", temperature=0.3, top_p=0.2):
+def get_cohere_response(messages, model="command-r-plus-08-2024", temperature=0.3, top_p=0.3):
 
     co = cohere.ClientV2(cohere_key)
 
@@ -157,9 +157,8 @@ You are a resume analysis expert tasked with optimizing a candidate’s resume t
 Your responsibilities include:
 
 1. **Keyword Matching**:
-   - Create a new version of the resume, using keywords and skills from the job description where it overlaps with the resume, ensuring that the resume mirrors the language of the job description.
+   - Create a new version of the resume, using keywords and skills from the job description, ensuring that the resume mirrors the language of the job description.
    - Try to incorporate as many relevant keywords and skills as possible from the job description into the resume.
-   - Do not add hard skills that are not present in the original resume.
 
 2. **Formatting**:
    - Follow a structured Markdown format for the revised resume using headers (`#`, `##`, `###`) for each section.
