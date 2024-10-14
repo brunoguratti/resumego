@@ -70,6 +70,7 @@ def extract_skills(text):
     # Define the custom spaCy component to match skills
     @Language.component("skill_component")
     def skill_component(doc):
+        """ Custom spaCy pipeline component to match skills in the text."""
         matches = matcher(doc)
         spans = [Span(doc, start, end, label="SKILL") for match_id, start, end in matches]
         spans = filter_spans(spans)
@@ -107,6 +108,7 @@ def get_score(resume_string, job_description_string):
 
 @st.cache_data(show_spinner=False)
 def get_gpt_response(messages, model="gpt-4o-mini", temperature=0.2, top_p=0.1):
+    """ Get a response from the OpenAI GPT-4 model."""
 
     client = OpenAI(
         api_key=openai_key,
@@ -123,6 +125,7 @@ def get_gpt_response(messages, model="gpt-4o-mini", temperature=0.2, top_p=0.1):
 
 @st.cache_data(show_spinner=False)
 def get_cohere_response(messages, model="command-r-plus-08-2024", temperature=0.3, top_p=0.3):
+    """ Get a response from the Cohere model."""
 
     co = cohere.ClientV2(cohere_key)
 
@@ -136,6 +139,8 @@ def get_cohere_response(messages, model="command-r-plus-08-2024", temperature=0.
 
 @st.cache_data(show_spinner=False)
 def get_messages(resume_text, job_description, keywords, skills):
+    """Prepare the messages for the LLM model."""
+
     messages = [
     {
         "role": "system",
@@ -223,6 +228,7 @@ if 'stage' not in ss:
     ss.stage = 0
 
 def set_stage(stage):
+    """ Set the stage of the application."""
     ss.stage = stage
 
 st.set_page_config(
@@ -231,6 +237,7 @@ st.set_page_config(
     layout="wide",  # Other options: "wide"
 )
 def load_css(file_name):
+    """ Load external CSS file."""
     with open(file_name) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
