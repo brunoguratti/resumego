@@ -130,7 +130,7 @@ def get_score(resume_text, job_desc_text):
 
 openai_key=st.secrets["openai_api_key"]
 
-@st.cache_data
+@st.cache_data(show_spinner=False)
 def get_gpt_response(messages, model="gpt-4o-mini", temperature=0.2, top_p=0.1):
 
     client = OpenAI(
@@ -146,7 +146,7 @@ def get_gpt_response(messages, model="gpt-4o-mini", temperature=0.2, top_p=0.1):
 
     return chat_completion.choices[0].message.content
 
-@st.cache_data
+@st.cache_data(show_spinner=False)
 def get_cohere_response(messages, model="command-r-plus-08-2024", temperature=0.2, top_p=0.1):
 
     co = cohere.ClientV2(cohere_key)
