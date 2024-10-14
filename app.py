@@ -156,8 +156,8 @@ You are a resume analysis expert tasked with optimizing a candidate’s resume t
 Your responsibilities include:
 
 1. **Keyword Matching**:
-   - Review the job description and the provided list of **keywords** and **skills**.
-   - Create a new version of the resume, using wording from the job description where it overlaps with the resume, ensuring that the resume mirrors the language of the job description.   - Try to incorporate as many relevant keywords and skills as possible from the job description into the resume.
+   - Create a new version of the resume, using keywords and skills from the job description where it overlaps with the resume, ensuring that the resume mirrors the language of the job description.
+   - Try to incorporate as many relevant keywords and skills as possible from the job description into the resume.
    - Do not add hard skills that are not present in the original resume.
 
 2. **Formatting**:
@@ -208,13 +208,13 @@ Experienced software engineer with 5+ years in backend development...
         "content": f"""
 Please extract the relevant information from the following resume text and adjust the wording based on the provided job description, keyword list, and skills list:
 
-**Resume Text:**
+**Resume:**
 {resume_text}
 
 **Job Description:**
 {job_description}
 
-**Keyword List:**
+**Keywords extracted from Job Description:**
 {keywords}
 
 **Skills List from Job Description:**
