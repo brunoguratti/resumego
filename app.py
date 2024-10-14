@@ -160,7 +160,7 @@ Your responsibilities include:
 1. **Keyword Matching**:
    - Create a new version of the resume, using keywords, skills and extracts from the job description, ensuring that the resume mirrors the language of the job description.
    - Consider the candidate experience and qualification and think about how to incorporate the keywords and skills naturally into the resume.
-   - Modify the resume wording to match the job description as closely as possible, considering the candidate's experience and qualifications. Example:
+   - Modify the wording to match the job description as closely as possible, considering the candidate's experience and qualifications. Example:
       - If the resume mentions "dashboard" and the job description uses "data visualization", you should replace "dashboard" with "data visualization." or at least add "data visualization" to the resume.
    - You can modify any section of the resume to better align with the job description.
 
@@ -184,8 +184,8 @@ Experienced software engineer with 5+ years in backend development...
 #### **Software Developer**, XYZ Inc. (Vancouver, BC) | **Mar 2017 - Dec 2019**
 - Developed a high-traffic e-commerce platform...
 
-### SKILLS
-[make a beautiful table to organize it] Python, SQL, Django, Flask, AWS, GCP, MySQL, PostgreSQL, Data Storytelling, Data Visualization
+### SKILLS [one single bullet point with comma-separated skills]
+- Python, SQL, Django, Flask, AWS, GCP, MySQL, PostgreSQL, Data Storytelling, Data Visualization
 
 ### EDUCATION
 **B.Sc. in Computer Science**, University of Technology (Vancouver, BC) | **2016**
