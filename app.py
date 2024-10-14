@@ -36,8 +36,7 @@ openai_key=st.secrets["openai_api_key"]
 cohere_key=st.secrets["cohere_api_key"]
 
 # Load the list of skills
-with open('data/skills.json') as f:
-    skills_list = json.load(f)
+
 
 # Define the skill extraction and keyword extraction functions
 def extract_text_from_pdf(pdf):
@@ -66,28 +65,30 @@ def extract_keywords(text):
     r.extract_keywords_from_text(cleaned_text)
     return r.get_ranked_phrases()
 
-# Load spaCy's small English model
-nlp = spacy.load("en_core_web_sm")
-
-# Create skill patterns and a PhraseMatcher
-skill_patterns = list(nlp.pipe(skills_list))
-matcher = PhraseMatcher(nlp.vocab, attr="LOWER")
-matcher.add("SKILL", skill_patterns)
-
-# Define the custom spaCy component to match skills
-@Language.component("skill_component")
-def skill_component(doc):
-    matches = matcher(doc)
-    spans = [Span(doc, start, end, label="SKILL") for match_id, start, end in matches]
-    spans = filter_spans(spans)
-    doc.ents = spans
-    return doc
-
-# Add the custom component to the pipeline after the NER component
-nlp.add_pipe("skill_component", after="ner")
-
 # Function to extract skills from text
 def extract_skills(text):
+    with open('data/skills.json') as f:
+        skills_list = json.load(f)
+
+    # Load spaCy's small English model
+    nlp = spacy.load("en_core_web_sm")
+
+    # Create skill patterns and a PhraseMatcher
+    skill_patterns = list(nlp.pipe(skills_list))
+    matcher = PhraseMatcher(nlp.vocab, attr="LOWER")
+    matcher.add("SKILL", skill_patterns)
+
+    # Define the custom spaCy component to match skills
+    @Language.component("skill_component")
+    def skill_component(doc):
+        matches = matcher(doc)
+        spans = [Span(doc, start, end, label="SKILL") for match_id, start, end in matches]
+        spans = filter_spans(spans)
+        doc.ents = spans
+        return doc
+
+    # Add the custom component to the pipeline after the NER component
+    nlp.add_pipe("skill_component", after="ner")
     doc = nlp(text)
     unique_skills = set(ent.text.lower() for ent in doc.ents if ent.label_ == "SKILL")
     return list(unique_skills)
@@ -106,7 +107,7 @@ def get_score(resume_string, job_description_string):
     """
     Calculate the similarity score between a resume and a job description using pre-trained embeddings.
     """
-    emb_model = SentenceTransformer("all-mpnet-base-v2")
+    emb_model = SentenceTransformer("BAAI/bge-base-en")
     resume_embedding = emb_model.encode(resume_string)
     jd_embedding = emb_model.encode(job_description_string)
 
@@ -146,6 +147,7 @@ def get_cohere_response(messages, model="command-r-plus-08-2024", temperature=0.
 
     return response.message.content[0].text
 
+@st.cache_data(show_spinner=False)
 def get_messages(resume_text, job_description, keywords, skills):
     messages = [
     {
