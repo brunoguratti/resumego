@@ -33,16 +33,11 @@ nltk.download('punkt_tab')
 nlp = spacy.load("en_core_web_sm")
 
 # Load API keys
-qdrant_api = st.secrets["qdrant_api_key"]
 openai_key=st.secrets["openai_api_key"]
 cohere_key=st.secrets["cohere_api_key"]
 
 # Initialize Qdrant and SentenceTransformer
 emb_model = SentenceTransformer("BAAI/bge-base-en")
-qdrant_client = QdrantClient(
-    url="https://9817dd27-777f-45cb-9bfe-78a2a8e14b88.europe-west3-0.gcp.cloud.qdrant.io:6333", 
-    api_key=qdrant_api,
-)
 
 # Load the list of skills
 with open('data/skills.json') as f:
@@ -357,51 +352,51 @@ if ss.stage > 0:
         st.write(emb_model.encode(improved_resume))
         st.write(emb_model.encode(job_description))
         # Get score
-        # score = get_score(improved_resume, job_description)*100
+        score = get_score(improved_resume, job_description)*100
         st.markdown("#### 5. Performance analysis")
         
         # # Create two columns with the specified width
         col1, col2 = st.columns([0.4, 0.6])
 
-        # # Determine the bar color based on the score value
-        # if score < 70:
-        #     bar_color = "#e4002b"  # Cherry red
-        # elif 70 <= score < 85:
-        #     bar_color = "#ffbb00"  # Caterpillar yellow
-        # else:
-        #     bar_color = "#006400"  # Dark green
+        # Determine the bar color based on the score value
+        if score < 70:
+            bar_color = "#e4002b"  # Cherry red
+        elif 70 <= score < 85:
+            bar_color = "#ffbb00"  # Caterpillar yellow
+        else:
+            bar_color = "#006400"  # Dark green
 
         # Plot gauge in the left column
         with col1:
             st.markdown("### Resume score")
-            # # Create a Plotly gauge figure
-            # fig = go.Figure(go.Indicator(
-            #     mode="gauge+number",
-            #     value=score,
-            #     number={'suffix': "%", 'font': {'size': 36}},
-            #     gauge={
-            #         'axis': {
-            #             'range': [0, 100],
-            #             'tickmode': "array",
-            #             'tickvals': [0, 25, 50, 75, 100],
-            #             'ticktext': ["0%", "25%", "50%", "75%", "100%"] 
-            #         },
-            #         'bar': {'color': bar_color}, 
-            #         'bgcolor': "white",
-            #         'borderwidth': 2,
-            #         'bordercolor': "black"
-            #     }
-            # ))
+            # Create a Plotly gauge figure
+            fig = go.Figure(go.Indicator(
+                mode="gauge+number",
+                value=score,
+                number={'suffix': "%", 'font': {'size': 36}},
+                gauge={
+                    'axis': {
+                        'range': [0, 100],
+                        'tickmode': "array",
+                        'tickvals': [0, 25, 50, 75, 100],
+                        'ticktext': ["0%", "25%", "50%", "75%", "100%"] 
+                    },
+                    'bar': {'color': bar_color}, 
+                    'bgcolor': "white",
+                    'borderwidth': 2,
+                    'bordercolor': "black"
+                }
+            ))
 
-            # # Define figure size in the layout
-            # fig.update_layout(
-            #     width=400,
-            #     height=140,
-            #     margin=dict(l=20, r=30, t=20, b=5),
-            # )
+            # Define figure size in the layout
+            fig.update_layout(
+                width=400,
+                height=140,
+                margin=dict(l=20, r=30, t=20, b=5),
+            )
 
-            # # Display the gauge in Streamlit
-            # st.plotly_chart(fig)
+            # Display the gauge in Streamlit
+            st.plotly_chart(fig)
 
         # Skills Comparison in the right column
         with col2:
