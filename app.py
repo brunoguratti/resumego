@@ -37,7 +37,7 @@ openai_key=st.secrets["openai_api_key"]
 cohere_key=st.secrets["cohere_api_key"]
 
 # Initialize Qdrant and SentenceTransformer
-model = SentenceTransformer("BAAI/bge-base-en")
+emb_model = SentenceTransformer("BAAI/bge-base-en")
 qdrant_client = QdrantClient(
     url="https://9817dd27-777f-45cb-9bfe-78a2a8e14b88.europe-west3-0.gcp.cloud.qdrant.io:6333", 
     api_key=qdrant_api,
@@ -111,8 +111,8 @@ def get_resume_and_comments(text, delimiter='---'):
 
 # Function to get resume score using Qdrant
 def get_score(resume_text, job_desc_text):
-    resume_embedding = model.encode(resume_text)
-    job_desc_embedding = model.encode(job_desc_text)
+    resume_embedding = emb_model.encode(resume_text)
+    job_desc_embedding = emb_model.encode(job_desc_text)
     qdrant_client.recreate_collection(
         collection_name="resume_collection",
         vectors_config=rest.VectorParams(size=len(resume_embedding), distance="Cosine"),
