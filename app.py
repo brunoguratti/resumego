@@ -375,9 +375,11 @@ if ss.stage > 0:
             st.download_button(label="Download", data=pdf_file, file_name="ImprovedResume.pdf", mime="application/pdf")
         st.markdown("#### 4. A few comments about your resume")
         st.write(comments_resume)
-
+        st.markdown("#### Debug")
+        st.write(emb_model.encode(improved_resume))
+        st.write(emb_model.encode(job_description))
         # Get score
-        score = get_score(improved_resume, job_description)*100
+        # score = get_score(improved_resume, job_description)*100
         st.markdown("#### 5. Performance analysis")
         
         # # Create two columns with the specified width
