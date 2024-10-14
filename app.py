@@ -46,7 +46,7 @@ def clean_text(text):
     """Clean the input text by removing stopwords, punctuation, and non-alphabetical characters."""
     tokens = word_tokenize(text.lower())
     stop_words = set(stopwords.words('english'))
-    cleaned_tokens = [word for word in tokens if word not in stop_words and re.match(r'^[a-zA-Z]+$', word)]
+    cleaned_tokens = [word for word in tokens if word not in stop_words and re.match(r'^[^\W\d_]+$', word, re.UNICODE)]
     
     return ' '.join(cleaned_tokens)  # Join cleaned tokens back into a string for spaCy processing
 
@@ -61,6 +61,8 @@ def extract_skills(text):
     """Extract skills from the input text using a pre-defined list of skills."""
     with open('data/skills.json') as f:
         skills_list = json.load(f)
+    
+    text = clean_text(text)
 
     nlp = spacy.load("en_core_web_sm")
     skill_patterns = list(nlp.pipe(skills_list))
