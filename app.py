@@ -418,6 +418,6 @@ if ss.stage > 0:
         st.error("Please upload a resume and paste a job description.")
 logo = "assets/images/bganal_bw.png"
 st.markdown(
-    f'<br><br><br><div style="text-align: center;"><img src="{logo}" width="100"></div>',
+    f'<br><div style="text-align: center;"><img src={logo} width=100></div>',
     unsafe_allow_html=True,
 )
