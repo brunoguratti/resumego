@@ -57,7 +57,7 @@ h2 {
 
 /* Streamlit Container Styling */
 .stApp {
-    max-width: 900px;
+    max-width: 1000px;
     margin: auto;
     padding: 0px;
     background-color: white;
