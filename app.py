@@ -238,8 +238,6 @@ load_css('css/styles.css')
 
 st.image("assets/images/resumego_logo_app.png")
 
-
-
 st.markdown("# Does your resume show your true potential to recruiters?")
 st.write("Provide us your resume and job description and watch as **resumego.** closes the gap for the perfect fit.")
 st.markdown("#### 1. Upload your resume")
@@ -307,25 +305,25 @@ if ss.stage > 0:
         with st.expander("",expanded=True):
             st.markdown(improved_resume)
         # Button to trigger PDF download
-        # Save the HTML as PDF using pdfkit
-        html_body = markdown2.markdown(improved_resume)
-        # Path to wkhtmltopdf executable
-        wkhtmltopdf_path = subprocess.check_output(['which', 'wkhtmltopdf'], universal_newlines=True).strip()
-        # Configure pdfkit to use the binary
-        config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
-        options = {
-        'margin-top': '15mm',
-        'margin-bottom': '15mm',
-        'margin-left': '15mm',
-        'margin-right': '15mm',
-        'encoding': 'UTF-8'
-        }
-        pdf_file_path = 'ImprovedResume.pdf'
-        # Generate PDF from HTML
-        pdfkit.from_string(html_body, pdf_file_path, options=options)
-        # Provide the PDF as a download
-        with open(pdf_file_path, 'rb') as pdf_file:
-            st.download_button(label="Download", data=pdf_file, file_name="ImprovedResume.pdf", mime="application/pdf")
+        # # Save the HTML as PDF using pdfkit
+        # html_body = markdown2.markdown(improved_resume)
+        # # Path to wkhtmltopdf executable
+        # wkhtmltopdf_path = subprocess.check_output(['which', 'wkhtmltopdf'], universal_newlines=True).strip()
+        # # Configure pdfkit to use the binary
+        # config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
+        # options = {
+        # 'margin-top': '15mm',
+        # 'margin-bottom': '15mm',
+        # 'margin-left': '15mm',
+        # 'margin-right': '15mm',
+        # 'encoding': 'UTF-8'
+        # }
+        # pdf_file_path = 'ImprovedResume.pdf'
+        # # Generate PDF from HTML
+        # pdfkit.from_string(html_body, pdf_file_path, options=options)
+        # # Provide the PDF as a download
+        # with open(pdf_file_path, 'rb') as pdf_file:
+        #     st.download_button(label="Download", data=pdf_file, file_name="ImprovedResume.pdf", mime="application/pdf")
         st.markdown("#### 4. A few comments about your resume")
         st.write(comments_resume)
 
