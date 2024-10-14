@@ -249,7 +249,7 @@ def set_stage(stage):
 
 st.set_page_config(
     page_title="resumego. increase your matches",  # Replace with your title
-    page_icon="💼",  # Replace with your custom favicon or emoji
+    page_icon="assets/images/favicon.ico",
     layout="wide",  # Other options: "wide"
 )
 def load_css(file_name):
