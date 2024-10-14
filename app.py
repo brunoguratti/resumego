@@ -265,12 +265,11 @@ if ss.stage > 0:
         # Extract keywords and skills
         keywords_jd = extract_keywords(job_description)
         set_kw_jd = set(keywords_jd)
-        skills = extract_skills(job_description)
-        keywords_resume = extract_keywords(resume_text)
-        set_kw_re = set(keywords_resume)
+        job_skills = extract_skills(job_description)
+        keywords_re = extract_keywords(resume_text)
 
         # Get prompt
-        messages = get_messages(resume_text, job_description, set_kw_jd, skills)
+        messages = get_messages(resume_text, job_description, keywords_jd, job_skills)
 
         # Send to GPT for improvement
         improved_response = get_cohere_response(messages)
@@ -336,7 +335,7 @@ if ss.stage > 0:
         st.markdown("## 4. A few comments about your resume")
         st.write(comments_resume)
         # Get score
-        score = get_score(improved_resume, job_description)*100
+        score = get_score(keywords_re, keywords_jd)*100
         st.markdown("## 5. Performance analysis")
         
         # # Create two columns with the specified width
@@ -389,7 +388,6 @@ if ss.stage > 0:
 
             # Extract skills from the resume and job description
             resume_skills = extract_skills(improved_resume)
-            job_skills = extract_skills(job_description)
 
             # Use annotated_text to highlight matches in green
             resume_annotations = []
