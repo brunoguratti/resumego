@@ -359,18 +359,18 @@ if ss.stage > 0:
 
         # Get score
         # score = get_score(resume_text, job_description)*100
-        st.markdown("#### 5. Performance analysis")
+        # st.markdown("#### 5. Performance analysis")
         
-        # Create two columns with the specified width
-        col1, col2 = st.columns([0.4, 0.6])
+        # # Create two columns with the specified width
+        # col1, col2 = st.columns([0.4, 0.6])
 
-        # Determine the bar color based on the score value
-        if score < 70:
-            bar_color = "#e4002b"  # Cherry red
-        elif 70 <= score < 85:
-            bar_color = "#ffbb00"  # Caterpillar yellow
-        else:
-            bar_color = "#006400"  # Dark green
+        # # Determine the bar color based on the score value
+        # if score < 70:
+        #     bar_color = "#e4002b"  # Cherry red
+        # elif 70 <= score < 85:
+        #     bar_color = "#ffbb00"  # Caterpillar yellow
+        # else:
+        #     bar_color = "#006400"  # Dark green
 
         # Plot gauge in the left column
         with col1:
