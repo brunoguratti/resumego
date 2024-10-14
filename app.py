@@ -35,9 +35,6 @@ nlp = spacy.load("en_core_web_sm")
 openai_key=st.secrets["openai_api_key"]
 cohere_key=st.secrets["cohere_api_key"]
 
-# Initialize Qdrant and SentenceTransformer
-emb_model = SentenceTransformer("BAAI/bge-base-en")
-
 # Load the list of skills
 with open('data/skills.json') as f:
     skills_list = json.load(f)
@@ -104,10 +101,12 @@ def get_resume_and_comments(text, delimiter='---'):
         return match.group(1).strip(), match.group(2).strip()
     return None, None
 
+@st.cache_data(show_spinner=False)
 def get_score(resume_string, job_description_string):
     """
     Calculate the similarity score between a resume and a job description using pre-trained embeddings.
     """
+    emb_model = SentenceTransformer("BAAI/bge-base-en")
     resume_embedding = emb_model.encode(resume_string)
     jd_embedding = emb_model.encode(job_description_string)
 
