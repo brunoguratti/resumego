@@ -177,21 +177,51 @@ Your responsibilities include:
    - Review the job description and the provided list of **keywords** and **skills**.
    - Make small **adjustments** to the wording in the resume where the descriptions from the job and resume overlap, ensuring that the resume mirrors the language of the job description **where applicable**. For example:
      - If the job description highlights specific skills like "data visualization" and the resume lists "dashboard," rewrite it to match the job description's phrasing as "data visualization".
-     - DO NOT add soft skills on the skills list. Only add technical skills.
      - Focus the adjustments on the summary, work experience, skills and projects sections.
-     - Do not alter, fabricate, or invent new skills or experiences not present in the original resume.
+   - **Do not alter, fabricate, or invent new skills or experiences** not present in the original resume. DO NOT add soft skills on the skills list.
 
 3. **Formatting**:
    - Follow a structured Markdown format for the revised resume using headers (`#`, `##`, `###`) for each section.
-   - Try not to change the original layout of the resume too much, but feel free to make minor adjustments for clarity and readability.
+    **Output Format**:
 
-4. **Strengths and Weak Points**:
-   - At the end of the resume, provide feedback:
-     - **Highlight the strong points** where the resume aligns well with the job description.
-     - **Critique the weak points**, offering suggestions for improvement where the resume could better match the job description or address gaps in qualifications.
-5. **Suggestions for improvement**
-   - Provide constructive feedback on how the candidate can enhance their resume to better match the job requirements.
+    The resume must be returned in the following Markdown structure:
+        
+    # John Doe
+    Toronto, ON | +1234567890 | **[john.doe@example.com](john.doe@example.com)** | **[linkedin.com/in/johndoe](https://linkedin.com/in/johndoe)**
 
+    ## SUMMARY
+    Experienced software engineer with 5+ years in backend development...
+
+    ## SKILLS
+    - **Programming language**: Python, SQL | **Frameworks**: Django, Flask
+    - **Cloud Platforms**: AWS, GCP | **Databases**: MySQL, PostgreSQL
+
+    ## WORK EXPERIENCE
+    **Senior Software Engineer**, ABC Corp (Toronto, ON) | **Jan 2020 - Present**
+    - Led a team of 5 engineers...
+    - Improved system performance by 25%...
+
+    **Software Developer**, XYZ Inc. (Vancouver, BC) | **Mar 2017 - Dec 2019**
+    - Developed a high-traffic e-commerce platform...
+
+    ## EDUCATION
+    **B.Sc. in Computer Science**, University of Technology (Vancouver, BC) | **2016**
+
+    ## PROJECTS
+    ### E-commerce Platform (2020)
+    - **Tech**: Python, Django, AWS
+    - **Description**: Built a scalable e-commerce platform...
+
+    ## CERTIFICATIONS
+    - AWS Certified Solutions Architect - Associate (2019)   
+    4. **Strengths and Weak Points**:
+    - At the end of the resume, provide feedback:
+        - **Highlight the strong points** where the resume aligns well with the job description.
+        - **Critique the weak points**, offering suggestions for improvement where the resume could better match the job description or address gaps in qualifications.
+    5. **Suggestions for improvement**
+    - Provide constructive feedback on how the candidate can enhance their resume to better match the job requirements.
+---
+   
 """
     },
     {
@@ -267,7 +297,7 @@ if ss.stage > 0:
         improved_response = get_cohere_response(messages)
 
         # # Get the new resume and comments
-        # improved_resume, comments_resume = get_resume_and_comments(improved_response)
+        improved_resume, comments_resume = get_resume_and_comments(improved_response)
 
 
         st.markdown(
@@ -303,96 +333,96 @@ if ss.stage > 0:
     unsafe_allow_html=True
 )
         with st.expander("",expanded=True):
-            st.markdown(improved_response)
+            st.markdown(improved_resume)
         # Button to trigger PDF download
-        # # Save the HTML as PDF using pdfkit
-        # html_body = markdown2.markdown(improved_resume)
-        # # Path to wkhtmltopdf executable
-        # wkhtmltopdf_path = subprocess.check_output(['which', 'wkhtmltopdf'], universal_newlines=True).strip()
-        # # Configure pdfkit to use the binary
-        # config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
-        # options = {
-        # 'margin-top': '15mm',
-        # 'margin-bottom': '15mm',
-        # 'margin-left': '15mm',
-        # 'margin-right': '15mm',
-        # 'encoding': 'UTF-8'
-        # }
-        # pdf_file_path = 'ImprovedResume.pdf'
-        # # Generate PDF from HTML
-        # pdfkit.from_string(html_body, pdf_file_path, options=options)
-        # # Provide the PDF as a download
-        # with open(pdf_file_path, 'rb') as pdf_file:
-        #     st.download_button(label="Download", data=pdf_file, file_name="ImprovedResume.pdf", mime="application/pdf")
-        # st.markdown("#### 4. A few comments about your resume")
-        # st.write(comments_resume)
+        # Save the HTML as PDF using pdfkit
+        html_body = markdown2.markdown(improved_resume)
+        # Path to wkhtmltopdf executable
+        wkhtmltopdf_path = subprocess.check_output(['which', 'wkhtmltopdf'], universal_newlines=True).strip()
+        # Configure pdfkit to use the binary
+        config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
+        options = {
+        'margin-top': '15mm',
+        'margin-bottom': '15mm',
+        'margin-left': '15mm',
+        'margin-right': '15mm',
+        'encoding': 'UTF-8'
+        }
+        pdf_file_path = 'ImprovedResume.pdf'
+        # Generate PDF from HTML
+        pdfkit.from_string(html_body, pdf_file_path, options=options)
+        # Provide the PDF as a download
+        with open(pdf_file_path, 'rb') as pdf_file:
+            st.download_button(label="Download", data=pdf_file, file_name="ImprovedResume.pdf", mime="application/pdf")
+        st.markdown("#### 4. A few comments about your resume")
+        st.write(comments_resume)
 
-        # # Get score
-        # score = get_score(resume_text, job_description)*100
-        # st.markdown("#### 5. Performance analysis")
+        # Get score
+        score = get_score(resume_text, job_description)*100
+        st.markdown("#### 5. Performance analysis")
         
-        # # Create two columns with the specified width
-        # col1, col2 = st.columns([0.4, 0.6])
+        # Create two columns with the specified width
+        col1, col2 = st.columns([0.4, 0.6])
 
-        # # Determine the bar color based on the score value
-        # if score < 70:
-        #     bar_color = "#e4002b"  # Cherry red
-        # elif 70 <= score < 85:
-        #     bar_color = "#ffbb00"  # Caterpillar yellow
-        # else:
-        #     bar_color = "#006400"  # Dark green
+        # Determine the bar color based on the score value
+        if score < 70:
+            bar_color = "#e4002b"  # Cherry red
+        elif 70 <= score < 85:
+            bar_color = "#ffbb00"  # Caterpillar yellow
+        else:
+            bar_color = "#006400"  # Dark green
 
-        # # Plot gauge in the left column
-        # with col1:
-        #     st.markdown("### Resume score")
-        #     # Create a Plotly gauge figure
-        #     fig = go.Figure(go.Indicator(
-        #         mode="gauge+number",
-        #         value=score,
-        #         number={'suffix': "%", 'font': {'size': 36}},
-        #         gauge={
-        #             'axis': {
-        #                 'range': [0, 100],
-        #                 'tickmode': "array",
-        #                 'tickvals': [0, 25, 50, 75, 100],
-        #                 'ticktext': ["0%", "25%", "50%", "75%", "100%"] 
-        #             },
-        #             'bar': {'color': bar_color}, 
-        #             'bgcolor': "white",
-        #             'borderwidth': 2,
-        #             'bordercolor': "black"
-        #         }
-        #     ))
+        # Plot gauge in the left column
+        with col1:
+            st.markdown("### Resume score")
+            # Create a Plotly gauge figure
+            fig = go.Figure(go.Indicator(
+                mode="gauge+number",
+                value=score,
+                number={'suffix': "%", 'font': {'size': 36}},
+                gauge={
+                    'axis': {
+                        'range': [0, 100],
+                        'tickmode': "array",
+                        'tickvals': [0, 25, 50, 75, 100],
+                        'ticktext': ["0%", "25%", "50%", "75%", "100%"] 
+                    },
+                    'bar': {'color': bar_color}, 
+                    'bgcolor': "white",
+                    'borderwidth': 2,
+                    'bordercolor': "black"
+                }
+            ))
 
-        #     # Define figure size in the layout
-        #     fig.update_layout(
-        #         width=400,
-        #         height=140,
-        #         margin=dict(l=20, r=30, t=20, b=5),
-        #     )
+            # Define figure size in the layout
+            fig.update_layout(
+                width=400,
+                height=140,
+                margin=dict(l=20, r=30, t=20, b=5),
+            )
 
-        #     # Display the gauge in Streamlit
-        #     st.plotly_chart(fig)
+            # Display the gauge in Streamlit
+            st.plotly_chart(fig)
 
-        # # Skills Comparison in the right column
-        # with col2:
-        #     # Skills Comparison
-        #     st.markdown("### Skills matching")
+        # Skills Comparison in the right column
+        with col2:
+            # Skills Comparison
+            st.markdown("### Skills matching")
 
-        #     # Extract skills from the resume and job description
-        #     resume_skills = extract_skills(improved_resume)
-        #     job_skills = extract_skills(job_description)
+            # Extract skills from the resume and job description
+            resume_skills = extract_skills(improved_resume)
+            job_skills = extract_skills(job_description)
 
-        #     # Use annotated_text to highlight matches in green
-        #     resume_annotations = []
-        #     for skill in job_skills:
-        #         if skill in resume_skills:
-        #             resume_annotations.append((skill, "match", "#4CAF50"))  # Green for match
-        #         else:
-        #             resume_annotations.append((skill, "not matched", "#FF6347"))  # Red for non-match
+            # Use annotated_text to highlight matches in green
+            resume_annotations = []
+            for skill in job_skills:
+                if skill in resume_skills:
+                    resume_annotations.append((skill, "match", "#4CAF50"))  # Green for match
+                else:
+                    resume_annotations.append((skill, "not matched", "#FF6347"))  # Red for non-match
 
-        #     # Display the annotated resume skills
-        #     annotated_text(*resume_annotations)
+            # Display the annotated resume skills
+            annotated_text(*resume_annotations)
     else:
         st.error("Please upload a resume and paste a job description.")
 st.write("")
