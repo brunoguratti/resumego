@@ -104,14 +104,15 @@ def get_resume_and_comments(text, delimiter='---'):
         return match.group(1).strip(), match.group(2).strip()
     return None, None
 
-# Function to get resume score using Qdrant
 def get_score(resume_string, job_description_string):
     """
-    Calculate the similarity score between a resume and a job description using Qdrant and pre-trained embeddings.
+    Calculate the similarity score between a resume and a job description using pre-trained embeddings.
     """
-    # Generate embeddings using SentenceTransformer model
     resume_embedding = emb_model.encode(resume_string)
     jd_embedding = emb_model.encode(job_description_string)
+
+    resume_embedding = np.array(resume_embedding).flatten()
+    jd_embedding = np.array(jd_embedding).flatten()
 
     cosine_similarity = np.dot(resume_embedding, jd_embedding) / (np.linalg.norm(resume_embedding) * np.linalg.norm(jd_embedding))
 
