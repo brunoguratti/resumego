@@ -189,11 +189,11 @@ Experienced software engineer with 5+ years in backend development...
 - **Cloud Platforms**: AWS, GCP | **Databases**: MySQL, PostgreSQL
 
 ### WORK EXPERIENCE
-##### **Senior Software Engineer**, ABC Corp (Toronto, ON) | **Jan 2020 - Present**
+#### **Senior Software Engineer**, ABC Corp (Toronto, ON) | **Jan 2020 - Present**
 - Led a team of 5 engineers...
 - Improved system performance by 25%...
 
-##### **Software Developer**, XYZ Inc. (Vancouver, BC) | **Mar 2017 - Dec 2019**
+#### **Software Developer**, XYZ Inc. (Vancouver, BC) | **Mar 2017 - Dec 2019**
 - Developed a high-traffic e-commerce platform...
 
 ### EDUCATION
