@@ -160,6 +160,7 @@ Your responsibilities include:
    - Create a new version of the resume, using keywords and skills from the job description, ensuring that the resume mirrors the language of the job description.
    - Consider the candidate experience and qualification and think about how to incorporate the keywords and skills naturally into the resume.
    - Try to incorporate as many skills and key-words as possible, considering the candidate's experience and qualifications.
+   - You can modify any section of the resume to better align with the job description.
 
 2. **Formatting**:
    - Follow a structured Markdown format for the revised resume using headers (`#`, `##`, `###`) for each section.
@@ -174,8 +175,7 @@ Toronto, ON | +1234567890 | **[john.doe@example.com](john.doe@example.com)** | *
 Experienced software engineer with 5+ years in backend development...
 
 ### SKILLS
-- **Programming language**: Python, SQL | **Frameworks**: Django, Flask
-- **Cloud Platforms**: AWS, GCP | **Databases**: MySQL, PostgreSQL
+- Python, SQL, Django, Flask, AWS, GCP, MySQL, PostgreSQL
 
 ### WORK EXPERIENCE
 #### **Senior Software Engineer**, ABC Corp (Toronto, ON) | **Jan 2020 - Present**
