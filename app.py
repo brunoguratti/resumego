@@ -37,7 +37,7 @@ openai_key=st.secrets["openai_api_key"]
 cohere_key=st.secrets["cohere_api_key"]
 
 # Initialize Qdrant and SentenceTransformer
-emb_model = SentenceTransformer("BAAI/bge-base-en")
+emb_model = SentenceTransformer("all-mpnet-base-v2")
 qdrant_client = QdrantClient(
     url="https://9817dd27-777f-45cb-9bfe-78a2a8e14b88.europe-west3-0.gcp.cloud.qdrant.io:6333", 
     api_key=qdrant_api,
