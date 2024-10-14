@@ -113,14 +113,21 @@ def get_resume_and_comments(text, delimiter='---'):
 def get_score(resume_text, job_desc_text):
     resume_embedding = emb_model.encode(resume_text)
     job_desc_embedding = emb_model.encode(job_desc_text)
-    qdrant_client.recreate_collection(
-        collection_name="resume_collection",
+    
+    collection_name="resume_collection"
+
+    qdrant_client.delete_collection(collection_name)
+
+    qdrant_client.create_collection(
+        collection_name=collection_name,
         vectors_config=rest.VectorParams(size=len(resume_embedding), distance="Cosine"),
     )
+    
     qdrant_client.upsert(
         collection_name="resume_collection",
         points=[{"id": 1, "vector": resume_embedding, "payload": {"text": resume_text}}],
     )
+    
     search_result = qdrant_client.search(
         collection_name="resume_collection", query_vector=job_desc_embedding, limit=1
     )
@@ -197,18 +204,18 @@ Experienced software engineer with 5+ years in backend development...
 - **Cloud Platforms**: AWS, GCP | **Databases**: MySQL, PostgreSQL
 
 ### WORK EXPERIENCE
-##### **Senior Software Engineer**, ABC Corp (Toronto, ON) | **Jan 2020 - Present**
+###### **Senior Software Engineer**, ABC Corp (Toronto, ON) | **Jan 2020 - Present**
 - Led a team of 5 engineers...
 - Improved system performance by 25%...
 
-##### **Software Developer**, XYZ Inc. (Vancouver, BC) | **Mar 2017 - Dec 2019**
+###### **Software Developer**, XYZ Inc. (Vancouver, BC) | **Mar 2017 - Dec 2019**
 - Developed a high-traffic e-commerce platform...
 
 ### EDUCATION
 **B.Sc. in Computer Science**, University of Technology (Vancouver, BC) | **2016**
 
 ### PROJECTS
-##### E-commerce Platform (2020)
+###### E-commerce Platform (2020)
 - **Tech**: Python, Django, AWS
 - **Description**: Built a scalable e-commerce platform...
 
@@ -359,7 +366,7 @@ if ss.stage > 0:
 
         # Get score
         # score = get_score(resume_text, job_description)*100
-        # st.markdown("#### 5. Performance analysis")
+        st.markdown("#### 5. Performance analysis")
         
         # # Create two columns with the specified width
         col1, col2 = st.columns([0.4, 0.6])
