@@ -110,28 +110,40 @@ def get_resume_and_comments(text, delimiter='---'):
     return None, None
 
 # Function to get resume score using Qdrant
-def get_score(resume_text, job_desc_text):
-    resume_embedding = emb_model.encode(resume_text)
-    job_desc_embedding = emb_model.encode(job_desc_text)
-    
-    collection_name="resume_comparison"
+def get_score(resume_string, job_description_string):
+    """
+    Calculate the similarity score between a resume and a job description using Qdrant and pre-trained embeddings.
+    """
+    # Generate embeddings using SentenceTransformer model
+    resume_embedding = emb_model.encode(resume_string)
+    jd_embedding = emb_model.encode(job_description_string)
 
-    qdrant_client.delete_collection(collection_name)
-
-    qdrant_client.create_collection(
-        collection_name=collection_name,
-        vectors_config=rest.VectorParams(size=len(resume_embedding), distance="Cosine"),
+    # Create a collection if it doesn't exist, and set the vectors config
+    qdrant_client.recreate_collection(
+        collection_name="demo_collection",
+        vectors_config=rest.VectorParams(size=len(resume_embedding), distance="Cosine"),  # Set size and distance metric
     )
-    
+
+    # Add resume embedding to Qdrant collection
     qdrant_client.upsert(
-        collection_name=collection_name,
-        points=[{"id": 1, "vector": resume_embedding, "payload": {"text": resume_text}}],
+        collection_name="demo_collection",
+        points=[
+            {
+                "id": 1,
+                "vector": resume_embedding,
+                "payload": {"text": resume_string},
+            }
+        ]
+    )
+
+    # Query Qdrant with job description embedding
+    search_result = qdrant_client.search(
+        collection_name="demo_collection",
+        query_vector=jd_embedding,
+        limit=1  # Get the most similar document
     )
     
-    search_result = qdrant_client.search(
-        collection_name=collection_name, query_vector=job_desc_embedding, limit=1
-    )
-    return search_result[0].score
+    return search_result
 
 # Function to send resume and job description to OpenAI API for improvement
 
