@@ -37,7 +37,7 @@ openai_key=st.secrets["openai_api_key"]
 cohere_key=st.secrets["cohere_api_key"]
 
 # Initialize Qdrant and SentenceTransformer
-emb_model = SentenceTransformer("all-mpnet-base-v2")
+emb_model = SentenceTransformer("BAAI/bge-base-en")
 qdrant_client = QdrantClient(
     url="https://9817dd27-777f-45cb-9bfe-78a2a8e14b88.europe-west3-0.gcp.cloud.qdrant.io:6333", 
     api_key=qdrant_api,
@@ -114,24 +114,24 @@ def get_score(resume_text, job_desc_text):
     resume_embedding = emb_model.encode(resume_text)
     job_desc_embedding = emb_model.encode(job_desc_text)
     
-    collection_name="resume_collection"
+    # collection_name="resume_collection"
 
-    qdrant_client.delete_collection(collection_name)
+    # qdrant_client.delete_collection(collection_name)
 
-    qdrant_client.create_collection(
-        collection_name=collection_name,
-        vectors_config=rest.VectorParams(size=len(resume_embedding), distance="Cosine"),
-    )
+    # qdrant_client.create_collection(
+    #     collection_name=collection_name,
+    #     vectors_config=rest.VectorParams(size=len(resume_embedding), distance="Cosine"),
+    # )
     
-    qdrant_client.upsert(
-        collection_name="resume_collection",
-        points=[{"id": 1, "vector": resume_embedding, "payload": {"text": resume_text}}],
-    )
+    # qdrant_client.upsert(
+    #     collection_name="resume_collection",
+    #     points=[{"id": 1, "vector": resume_embedding, "payload": {"text": resume_text}}],
+    # )
     
-    search_result = qdrant_client.search(
-        collection_name="resume_collection", query_vector=job_desc_embedding, limit=1
-    )
-    return search_result[0].score
+    # search_result = qdrant_client.search(
+    #     collection_name="resume_collection", query_vector=job_desc_embedding, limit=1
+    # )
+    return 1
 
 # Function to send resume and job description to OpenAI API for improvement
 
