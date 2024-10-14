@@ -340,7 +340,7 @@ if ss.stage > 0:
         'margin-right': '15mm',
         'encoding': 'UTF-8'
         }
-        pdf_file_path = 'ImprovedResume.pdf'
+        pdf_file_path = f"{uploaded_file.name}_improved.pdf"
         # Generate PDF from HTML
         pdfkit.from_string(html_body, pdf_file_path, options=options)
         # Provide the PDF as a download
