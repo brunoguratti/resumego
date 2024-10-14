@@ -324,7 +324,7 @@ if ss.stage > 0:
     ''',
     unsafe_allow_html=True
 )
-        with st.expander("",expanded=True):
+        with st.expander("Your fine-tuned resume is ready! Hit the **Download** button below to get it.",expanded=True):
             st.markdown(improved_resume)
         # Button to trigger PDF download
         # Save the HTML as PDF using pdfkit
@@ -345,7 +345,7 @@ if ss.stage > 0:
         pdfkit.from_string(html_body, pdf_file_path, options=options)
         # Provide the PDF as a download
         with open(pdf_file_path, 'rb') as pdf_file:
-            st.download_button(label="Download", data=pdf_file, file_name="ImprovedResume.pdf", mime="application/pdf")
+            st.download_button(label="Download", data=pdf_file, file_name=pdf_file_path, mime="application/pdf")
         st.markdown("## 4. A few comments about your resume")
         st.write(comments_resume)
         # Get score
