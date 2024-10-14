@@ -134,7 +134,7 @@ def get_gpt_response(messages, model="gpt-4o-mini", temperature=0.2, top_p=0.1):
     return chat_completion.choices[0].message.content
 
 @st.cache_data(show_spinner=False)
-def get_cohere_response(messages, model="command-r-plus-08-2024", temperature=0.2, top_p=0.1):
+def get_cohere_response(messages, model="command-r-plus-08-2024", temperature=0.3, top_p=0.2):
 
     co = cohere.ClientV2(cohere_key)
 
@@ -160,7 +160,8 @@ Your responsibilities include:
    - Make **adjustments** to the wording in the resume where the descriptions from the job and resume overlap, ensuring that the resume mirrors the language of the job description. For example:
      - If the job description highlights specific skills like "data visualization" and the resume lists "dashboard," rewrite it to match the job description's phrasing as "data visualization".
    - Try to incorporate as many relevant keywords and skills as possible from the job description into the resume.
-   - Do not add hard skills that are not present in the resume.
+   - Do not add hard skills that are not present in the resume. 
+   - If a soft skill is mentioned in the job description, try to incorporate it into the resume.
 
 2. **Formatting**:
    - Follow a structured Markdown format for the revised resume using headers (`#`, `##`, `###`) for each section.
