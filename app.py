@@ -114,7 +114,7 @@ def get_score(resume_text, job_desc_text):
     resume_embedding = emb_model.encode(resume_text)
     job_desc_embedding = emb_model.encode(job_desc_text)
     
-    collection_name="resume_collection"
+    collection_name="resume_comparison"
 
     qdrant_client.delete_collection(collection_name)
 
@@ -124,12 +124,12 @@ def get_score(resume_text, job_desc_text):
     )
     
     qdrant_client.upsert(
-        collection_name="resume_collection",
+        collection_name=collection_name,
         points=[{"id": 1, "vector": resume_embedding, "payload": {"text": resume_text}}],
     )
     
     search_result = qdrant_client.search(
-        collection_name="resume_collection", query_vector=job_desc_embedding, limit=1
+        collection_name=collection_name, query_vector=job_desc_embedding, limit=1
     )
     return search_result[0].score
 
@@ -301,7 +301,7 @@ if ss.stage > 0:
         messages = get_messages(resume_text, job_description, set_kw_jd, skills)
 
         # Send to GPT for improvement
-        improved_response = get_gpt_response(messages)
+        improved_response = get_cohere_response(messages)
 
         # # Get the new resume and comments
         improved_resume, comments_resume = get_resume_and_comments(improved_response)
