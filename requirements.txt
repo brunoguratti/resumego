@@ -12,3 +12,4 @@ pdfkit
 markdown2
 st-annotated-text
 cohere
+pillow

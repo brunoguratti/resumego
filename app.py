@@ -25,7 +25,9 @@ import pdfkit
 import markdown2
 import cohere
 import numpy as np
-
+from PIL import Image
+import base64
+import io
 
 nltk.download('stopwords')
 nltk.download('punkt_tab')
@@ -416,8 +418,15 @@ if ss.stage > 0:
             annotated_text(*resume_annotations)
     else:
         st.error("Please upload a resume and paste a job description.")
-logo = "/assets/images/bganal_bw.png"
+
+bg_logo = Image.open("assets/images/bganal_bw.png")
+
+def image_to_base64(image):
+    buffered = io.BytesIO()
+    image.save(buffered, format="PNG")  # Save as PNG format
+    return base64.b64encode(buffered.getvalue()).decode()  # Convert to base64
+
 st.markdown(
-    f'<br><div style="text-align: center;"><img src={logo} width=100></div>',
+    f'<br><div style="text-align: center;"><img src="data:image/png;base64,{image_to_base64(bg_logo)}" width="130"></div>',
     unsafe_allow_html=True,
 )
