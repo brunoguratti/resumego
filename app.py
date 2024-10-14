@@ -420,4 +420,4 @@ st.write("")
 logo = "assets/images/bganal_bw.png"
 c1, c2, c3, c4, c5 = st.columns(5)
 with c3:
-    st.image(logo)
+    st.image(logo, width=100)
