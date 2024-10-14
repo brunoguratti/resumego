@@ -157,11 +157,9 @@ Your responsibilities include:
 
 1. **Keyword Matching**:
    - Review the job description and the provided list of **keywords** and **skills**.
-   - Make **adjustments** to the wording in the resume where the descriptions from the job and resume overlap, ensuring that the resume mirrors the language of the job description. For example:
-     - If the job description highlights specific skills like "data visualization" and the resume lists "dashboard," rewrite it to match the job description's phrasing as "data visualization".
+   - Make **adjustments** to the wording in the resume where the descriptions from the job and resume overlap, ensuring that the resume mirrors the language of the job description.
    - Try to incorporate as many relevant keywords and skills as possible from the job description into the resume.
-   - Do not add hard skills that are not present in the resume. 
-   - If a soft skill is mentioned in the job description, try to incorporate it into the resume.
+   - Do not add hard skills that are not present in the original resume.
 
 2. **Formatting**:
    - Follow a structured Markdown format for the revised resume using headers (`#`, `##`, `###`) for each section.
