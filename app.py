@@ -362,7 +362,7 @@ if ss.stage > 0:
         # st.markdown("#### 5. Performance analysis")
         
         # # Create two columns with the specified width
-        # col1, col2 = st.columns([0.4, 0.6])
+        col1, col2 = st.columns([0.4, 0.6])
 
         # # Determine the bar color based on the score value
         # if score < 70:
