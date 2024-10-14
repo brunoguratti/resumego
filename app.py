@@ -236,7 +236,7 @@ def load_css(file_name):
 
 load_css('css/styles.css')
 
-st.image("assets/images/resumego_logo_app.png")
+st.image("assets/images/resumego_logo_app.png", width=300)
 
 st.markdown("# Does your resume show your true potential to recruiters?")
 st.write("Provide us your resume and job description and watch as **resumego.** closes the gap for the perfect fit.")
