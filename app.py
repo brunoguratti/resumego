@@ -158,7 +158,8 @@ Your responsibilities include:
 
 1. **Keyword Matching**:
    - Create a new version of the resume, using keywords and skills from the job description, ensuring that the resume mirrors the language of the job description.
-   - Try to incorporate as many relevant keywords and skills as possible from the job description into the resume.
+   - Consider the candidate experience and qualification and think about how to incorporate the keywords and skills naturally into the resume.
+   - If a skill or keyword is not present in the resume, try to incorporate it in a relevant section, considering the candidate's experience and qualifications.
 
 2. **Formatting**:
    - Follow a structured Markdown format for the revised resume using headers (`#`, `##`, `###`) for each section.
