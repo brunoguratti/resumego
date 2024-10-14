@@ -266,8 +266,8 @@ if ss.stage > 0:
         # Send to GPT for improvement
         improved_response = get_cohere_response(messages)
 
-        # Get the new resume and comments
-        improved_resume, comments_resume = get_resume_and_comments(improved_response)
+        # # Get the new resume and comments
+        # improved_resume, comments_resume = get_resume_and_comments(improved_response)
 
 
         st.markdown(
@@ -303,7 +303,7 @@ if ss.stage > 0:
     unsafe_allow_html=True
 )
         with st.expander("",expanded=True):
-            st.markdown(improved_resume)
+            st.markdown(improved_response)
         # Button to trigger PDF download
         # # Save the HTML as PDF using pdfkit
         # html_body = markdown2.markdown(improved_resume)
@@ -324,8 +324,8 @@ if ss.stage > 0:
         # # Provide the PDF as a download
         # with open(pdf_file_path, 'rb') as pdf_file:
         #     st.download_button(label="Download", data=pdf_file, file_name="ImprovedResume.pdf", mime="application/pdf")
-        st.markdown("#### 4. A few comments about your resume")
-        st.write(comments_resume)
+        # st.markdown("#### 4. A few comments about your resume")
+        # st.write(comments_resume)
 
         # # Get score
         # score = get_score(resume_text, job_description)*100
