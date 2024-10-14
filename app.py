@@ -206,7 +206,7 @@ Experienced software engineer with 5+ years in backend development...
    - At the end of the resume, add a delimiter (---) and provide feedback:
      - ### Strong points: where the resume aligns well with the job description.
      - ### Weak points: offering suggestions for improvement where the resume could better match the job description or address gaps in qualifications.
-     - ## Suggestions for improvement: providing constructive feedback on how the candidate can enhance their resume to better match the job requirements.
+     - ### Suggestions for improvement: providing constructive feedback on how the candidate can enhance their resume to better match the job requirements.
    
 """
     },
