@@ -23,6 +23,7 @@ import json
 import plotly.graph_objects as go
 import pdfkit
 import markdown2
+import cohere
 
 
 nltk.download('stopwords')
@@ -33,6 +34,7 @@ nlp = spacy.load("en_core_web_sm")
 # Load API keys
 qdrant_api = st.secrets["qdrant_api_key"]
 openai_key=st.secrets["openai_api_key"]
+cohere_key=st.secrets["cohere_api_key"]
 
 # Initialize Qdrant and SentenceTransformer
 model = SentenceTransformer("BAAI/bge-base-en")
@@ -131,9 +133,7 @@ openai_key=st.secrets["openai_api_key"]
 @st.cache_data
 def get_gpt_response(messages, model="gpt-4o-mini", temperature=0.2, top_p=0.1):
 
-    # Example API call (chat completion with GPT-4 model)
     client = OpenAI(
-        # This is the default and can be omitted
         api_key=openai_key,
     )
 
@@ -144,8 +144,20 @@ def get_gpt_response(messages, model="gpt-4o-mini", temperature=0.2, top_p=0.1):
         top_p=top_p,
     )
 
-    # Print the response
     return chat_completion.choices[0].message.content
+
+@st.cache_data
+def get_cohere_response(messages, model="command-r-plus-08-2024", temperature=0.2, top_p=0.1):
+
+    co = cohere.ClientV2(cohere_key)
+
+    response = co.chat(
+        model=model,
+        messages=messages,
+        temperature=temperature,
+        p=top_p,)
+
+    return response.message.content[0].text
 
 def get_messages(resume_text, job_description, keywords, skills):
     messages = [
@@ -254,7 +266,7 @@ if ss.stage > 0:
         messages = get_messages(resume_text, job_description, set_kw_jd, skills)
 
         # Send to GPT for improvement
-        improved_response = get_gpt_response(messages)
+        improved_response = get_cohere_response(messages)
 
         # Get the new resume and comments
         improved_resume, comments_resume = get_resume_and_comments(improved_response)
