@@ -157,7 +157,7 @@ def get_cohere_response(messages, model="command-r-plus-08-2024", temperature=0.
         temperature=temperature,
         p=top_p,)
 
-    return response.message.content[0].text
+    return response
 
 def get_messages(resume_text, job_description, keywords, skills):
     messages = [
