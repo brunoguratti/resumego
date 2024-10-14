@@ -186,33 +186,33 @@ Your responsibilities include:
 
 The resume must be returned in the following Markdown structure:
     
-# John Doe
+## John Doe
 Toronto, ON | +1234567890 | **[john.doe@example.com](john.doe@example.com)** | **[linkedin.com/in/johndoe](https://linkedin.com/in/johndoe)**
 
-## SUMMARY
+### SUMMARY
 Experienced software engineer with 5+ years in backend development...
 
-## SKILLS
+### SKILLS
 - **Programming language**: Python, SQL | **Frameworks**: Django, Flask
 - **Cloud Platforms**: AWS, GCP | **Databases**: MySQL, PostgreSQL
 
-## WORK EXPERIENCE
-**Senior Software Engineer**, ABC Corp (Toronto, ON) | **Jan 2020 - Present**
+### WORK EXPERIENCE
+##### **Senior Software Engineer**, ABC Corp (Toronto, ON) | **Jan 2020 - Present**
 - Led a team of 5 engineers...
 - Improved system performance by 25%...
 
-**Software Developer**, XYZ Inc. (Vancouver, BC) | **Mar 2017 - Dec 2019**
+##### **Software Developer**, XYZ Inc. (Vancouver, BC) | **Mar 2017 - Dec 2019**
 - Developed a high-traffic e-commerce platform...
 
-## EDUCATION
+### EDUCATION
 **B.Sc. in Computer Science**, University of Technology (Vancouver, BC) | **2016**
 
-## PROJECTS
-### E-commerce Platform (2020)
+### PROJECTS
+##### E-commerce Platform (2020)
 - **Tech**: Python, Django, AWS
 - **Description**: Built a scalable e-commerce platform...
 
-## CERTIFICATIONS
+### CERTIFICATIONS
 - AWS Certified Solutions Architect - Associate (2019)   
 
 4. **Strengths and Weak Points**:
@@ -358,7 +358,7 @@ if ss.stage > 0:
         st.write(comments_resume)
 
         # Get score
-        score = get_score(resume_text, job_description)*100
+        # score = get_score(resume_text, job_description)*100
         st.markdown("#### 5. Performance analysis")
         
         # Create two columns with the specified width
@@ -375,34 +375,34 @@ if ss.stage > 0:
         # Plot gauge in the left column
         with col1:
             st.markdown("### Resume score")
-            # Create a Plotly gauge figure
-            fig = go.Figure(go.Indicator(
-                mode="gauge+number",
-                value=score,
-                number={'suffix': "%", 'font': {'size': 36}},
-                gauge={
-                    'axis': {
-                        'range': [0, 100],
-                        'tickmode': "array",
-                        'tickvals': [0, 25, 50, 75, 100],
-                        'ticktext': ["0%", "25%", "50%", "75%", "100%"] 
-                    },
-                    'bar': {'color': bar_color}, 
-                    'bgcolor': "white",
-                    'borderwidth': 2,
-                    'bordercolor': "black"
-                }
-            ))
+            # # Create a Plotly gauge figure
+            # fig = go.Figure(go.Indicator(
+            #     mode="gauge+number",
+            #     value=score,
+            #     number={'suffix': "%", 'font': {'size': 36}},
+            #     gauge={
+            #         'axis': {
+            #             'range': [0, 100],
+            #             'tickmode': "array",
+            #             'tickvals': [0, 25, 50, 75, 100],
+            #             'ticktext': ["0%", "25%", "50%", "75%", "100%"] 
+            #         },
+            #         'bar': {'color': bar_color}, 
+            #         'bgcolor': "white",
+            #         'borderwidth': 2,
+            #         'bordercolor': "black"
+            #     }
+            # ))
 
-            # Define figure size in the layout
-            fig.update_layout(
-                width=400,
-                height=140,
-                margin=dict(l=20, r=30, t=20, b=5),
-            )
+            # # Define figure size in the layout
+            # fig.update_layout(
+            #     width=400,
+            #     height=140,
+            #     margin=dict(l=20, r=30, t=20, b=5),
+            # )
 
-            # Display the gauge in Streamlit
-            st.plotly_chart(fig)
+            # # Display the gauge in Streamlit
+            # st.plotly_chart(fig)
 
         # Skills Comparison in the right column
         with col2:
