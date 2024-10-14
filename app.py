@@ -143,7 +143,7 @@ def get_score(resume_string, job_description_string):
         limit=1  # Get the most similar document
     )
     
-    return search_result
+    return search_result[0].score
 
 # Function to send resume and job description to OpenAI API for improvement
 
@@ -377,7 +377,7 @@ if ss.stage > 0:
         st.write(comments_resume)
 
         # Get score
-        score = get_score(resume_text, job_description)*100
+        score = get_score(improved_resume, job_description)*100
         st.markdown("#### 5. Performance analysis")
         
         # # Create two columns with the specified width
