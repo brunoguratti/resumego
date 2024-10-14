@@ -178,7 +178,7 @@ Your responsibilities include:
 
 The resume must be returned in the following Markdown structure:
     
-## John Doe
+# John Doe
 Toronto, ON | +1234567890 | **[john.doe@example.com](john.doe@example.com)** | **[linkedin.com/in/johndoe](https://linkedin.com/in/johndoe)**
 
 ### SUMMARY
@@ -189,18 +189,18 @@ Experienced software engineer with 5+ years in backend development...
 - **Cloud Platforms**: AWS, GCP | **Databases**: MySQL, PostgreSQL
 
 ### WORK EXPERIENCE
-###### **Senior Software Engineer**, ABC Corp (Toronto, ON) | **Jan 2020 - Present**
+##### **Senior Software Engineer**, ABC Corp (Toronto, ON) | **Jan 2020 - Present**
 - Led a team of 5 engineers...
 - Improved system performance by 25%...
 
-###### **Software Developer**, XYZ Inc. (Vancouver, BC) | **Mar 2017 - Dec 2019**
+##### **Software Developer**, XYZ Inc. (Vancouver, BC) | **Mar 2017 - Dec 2019**
 - Developed a high-traffic e-commerce platform...
 
 ### EDUCATION
 **B.Sc. in Computer Science**, University of Technology (Vancouver, BC) | **2016**
 
 ### PROJECTS
-###### E-commerce Platform (2020)
+#### E-commerce Platform (2020)
 - **Tech**: Python, Django, AWS
 - **Description**: Built a scalable e-commerce platform...
 
@@ -262,13 +262,13 @@ st.image("assets/images/resumego_logo_app.png", width=300)
 
 st.markdown("# Does your resume show your true potential to recruiters?")
 st.write("Provide us your resume and job description and watch as **resumego.** closes the gap for the perfect fit.")
-st.markdown("#### 1. Upload your resume")
+st.markdown("## 1. Upload your resume")
 # Upload Resume
 uploaded_file = st.file_uploader("", type="pdf")
 if uploaded_file is not None:
     resume_text = extract_text_from_pdf(uploaded_file)
 
-st.markdown("#### 2. Paste the job description")
+st.markdown("## 2. Paste the job description")
 # Paste Job Description
 job_description = st.text_area("", height=200)
 
@@ -307,7 +307,7 @@ if ss.stage > 0:
 )
 
         # Display the improved resume
-        st.markdown("#### 3. Your improved resume")
+        st.markdown("## 3. Your improved resume")
 
         st.markdown(
     '''
@@ -346,11 +346,11 @@ if ss.stage > 0:
         # Provide the PDF as a download
         with open(pdf_file_path, 'rb') as pdf_file:
             st.download_button(label="Download", data=pdf_file, file_name="ImprovedResume.pdf", mime="application/pdf")
-        st.markdown("#### 4. A few comments about your resume")
+        st.markdown("## 4. A few comments about your resume")
         st.write(comments_resume)
         # Get score
         score = get_score(improved_resume, job_description)*100
-        st.markdown("#### 5. Performance analysis")
+        st.markdown("## 5. Performance analysis")
         
         # # Create two columns with the specified width
         col1, col2 = st.columns([0.4, 0.6])
