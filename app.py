@@ -26,20 +26,16 @@ import numpy as np
 from PIL import Image
 
 
+# Download the spaCy model
 nltk.download('stopwords')
 nltk.download('punkt_tab')
-
-nlp = spacy.load("en_core_web_sm")
 
 # Load API keys
 openai_key=st.secrets["openai_api_key"]
 cohere_key=st.secrets["cohere_api_key"]
 
-# Load the list of skills
-
-
-# Define the skill extraction and keyword extraction functions
 def extract_text_from_pdf(pdf):
+    """Extract text from a PDF file using PyPDF2."""
     reader = PyPDF2.PdfReader(pdf)
     text = ""
     for page in range(len(reader.pages)):
@@ -48,12 +44,8 @@ def extract_text_from_pdf(pdf):
 
 def clean_text(text):
     """Clean the input text by removing stopwords, punctuation, and non-alphabetical characters."""
-    # Tokenize the text
     tokens = word_tokenize(text.lower())
-
     stop_words = set(stopwords.words('english'))
-
-    # Remove stopwords, punctuation, and non-alphabetical characters
     cleaned_tokens = [word for word in tokens if word not in stop_words and re.match(r'^[a-zA-Z]+$', word)]
     
     return ' '.join(cleaned_tokens)  # Join cleaned tokens back into a string for spaCy processing
@@ -65,15 +57,12 @@ def extract_keywords(text):
     r.extract_keywords_from_text(cleaned_text)
     return r.get_ranked_phrases()
 
-# Function to extract skills from text
 def extract_skills(text):
+    """Extract skills from the input text using a pre-defined list of skills."""
     with open('data/skills.json') as f:
         skills_list = json.load(f)
 
-    # Load spaCy's small English model
     nlp = spacy.load("en_core_web_sm")
-
-    # Create skill patterns and a PhraseMatcher
     skill_patterns = list(nlp.pipe(skills_list))
     matcher = PhraseMatcher(nlp.vocab, attr="LOWER")
     matcher.add("SKILL", skill_patterns)
@@ -94,10 +83,8 @@ def extract_skills(text):
     return list(unique_skills)
 
 def get_resume_and_comments(text, delimiter='---'):
-    # Regular expression to capture two groups: before and after the delimiter
+    """Extract the resume and comments from the improved response."""
     match = re.match(r'^(.*?)' + re.escape(delimiter) + r'(.*)', text, re.DOTALL)
-    
-    # Return the matched groups if found
     if match:
         return match.group(1).strip(), match.group(2).strip()
     return None, None
