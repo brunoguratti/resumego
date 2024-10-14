@@ -42,8 +42,9 @@ h1 {
 }
 
 /* Subheader (h2) Styling with Chiclet Effect */
-h4 {
+h2 {
     font-family: 'League Spartan', sans-serif;
+    font-size: 18px; /* Size */
     font-weight: 700; /* Adjust this weight as needed */
     background-color: #e4002b; /* Chiclet effect background */
     color: white;
