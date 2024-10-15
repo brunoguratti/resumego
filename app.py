@@ -259,7 +259,7 @@ if uploaded_file is not None:
 st.markdown("## 2. Paste the job description")
 job_description = st.text_area("", height=200)
 
-st.button("**go.!**", on_click=set_stage, args = (1,))
+st.button("**Fine-tune my resume**", on_click=set_stage, args = (1,))
 if ss.stage > 0:
     if resume_text and job_description:
         keywords_jd = extract_keywords(job_description)
@@ -268,8 +268,9 @@ if ss.stage > 0:
         resume_skills = extract_skills(resume_text)
         keywords_re = extract_keywords(resume_text)
         missing_skills = set(job_skills) - set(resume_skills)
-        skills_include = st.multiselect("Here's the list of missing keywords in your resume. Select which one you want to include.", missing_skills, missing_skills)
-        st.button("**OK**", on_click=set_stage, args = (2,))
+        st.markdown("## 3. Select the skills to add to your resume")
+        skills_include = st.multiselect("", missing_skills, missing_skills)
+        st.button("Continue", on_click=set_stage, args = (2,))
         if ss.stage > 1:
             messages = get_messages(resume_text, job_description, keywords_jd, skills_include)
             improved_response = get_cohere_response(messages)
@@ -290,7 +291,7 @@ if ss.stage > 0:
                 unsafe_allow_html=True
     )
 
-            st.markdown("## 3. Your improved resume")
+            st.markdown("## 4. Your improved resume")
 
             st.markdown(
         '''
@@ -327,11 +328,11 @@ if ss.stage > 0:
             # Provide the PDF as a download
             with open(pdf_file_path, 'rb') as pdf_file:
                 st.download_button(label="Download", data=pdf_file, file_name=pdf_file_path, mime="application/pdf")
-            st.markdown("## 4. A few comments about your resume")
+            st.markdown("## 5. A few comments about your resume")
             st.write(comments_resume)
             # Get score between resume and job description using vector embeddings and cosine similarity
             score = get_score(keywords_re, keywords_jd)*100
-            st.markdown("## 5. Performance analysis")
+            st.markdown("## 6. Performance analysis")
             
             col1, col2 = st.columns([0.4, 0.6])
 
