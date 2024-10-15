@@ -48,7 +48,7 @@ def clean_text(text):
     stop_words = set(stopwords.words('english'))
     cleaned_tokens = [word for word in tokens if word not in stop_words and re.match(r'^[^\W\d_]+$', word, re.UNICODE)]
     
-    return ' '.join(cleaned_tokens)  # Join cleaned tokens back into a string for spaCy processing
+    return ' '.join(cleaned_tokens)
 
 def extract_keywords(text):
     """Extract keywords from the input text using RAKE."""
@@ -223,26 +223,27 @@ Please extract the relevant information from the following resume text and adjus
 
     return messages
 
-# Streamlit app
-
-## - Create session state manager
-if 'stage' not in ss:
-    ss.stage = 0
-
-def set_stage(stage):
-    """ Set the stage of the application."""
-    ss.stage = stage
-
-st.set_page_config(
-    page_title="resumego. increase your matches",  # Replace with your title
-    page_icon="assets/images/favicon.ico",
-    layout="wide",  # Other options: "wide"
-)
 def load_css(file_name):
     """ Load external CSS file."""
     with open(file_name) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
+# Streamlit app
+# Create session state manager
+if 'stage' not in ss:
+    ss.stage = 0
+def set_stage(stage):
+    """ Set the stage of the application."""
+    ss.stage = stage
+
+# Set page configuration
+st.set_page_config(
+    page_title="resumego. increase your matches",
+    page_icon="assets/images/favicon.ico",
+    layout="wide",
+)
+
+# Load custom CSS
 load_css('css/styles.css')
 
 st.image("assets/images/resumego_logo_app.png", width=300)
@@ -250,31 +251,24 @@ st.image("assets/images/resumego_logo_app.png", width=300)
 st.markdown("# Does your resume show your true potential to recruiters?")
 st.write("Provide us your resume and job description and watch as **resumego.** closes the gap for the perfect fit.")
 st.markdown("## 1. Upload your resume")
-# Upload Resume
+
 uploaded_file = st.file_uploader("", type="pdf")
 if uploaded_file is not None:
     resume_text = extract_text_from_pdf(uploaded_file)
 
 st.markdown("## 2. Paste the job description")
-# Paste Job Description
 job_description = st.text_area("", height=200)
 
 st.button("**go.!**", on_click=set_stage, args = (1,))
 if ss.stage > 0:
     if resume_text and job_description:
-        # Extract keywords and skills
         keywords_jd = extract_keywords(job_description)
         set_kw_jd = set(keywords_jd)
         job_skills = extract_skills(job_description)
         keywords_re = extract_keywords(resume_text)
 
-        # Get prompt
         messages = get_messages(resume_text, job_description, keywords_jd, job_skills)
-
-        # Send to GPT for improvement
         improved_response = get_cohere_response(messages)
-
-        # # Get the new resume and comments
         improved_resume, comments_resume = get_resume_and_comments(improved_response)
 
 
@@ -292,7 +286,6 @@ if ss.stage > 0:
             unsafe_allow_html=True
 )
 
-        # Display the improved resume
         st.markdown("## 3. Your improved resume")
 
         st.markdown(
@@ -312,10 +305,8 @@ if ss.stage > 0:
 )
         with st.expander("Your fine-tuned resume is ready! Hit the **Download** button below to get it.",expanded=True):
             st.markdown(improved_resume)
-        # Button to trigger PDF download
-        # Save the HTML as PDF using pdfkit
+        # Convert the Markdown to HTML
         html_body = markdown2.markdown(improved_resume)
-        # Path to wkhtmltopdf executable
         wkhtmltopdf_path = subprocess.check_output(['which', 'wkhtmltopdf'], universal_newlines=True).strip()
         # Configure pdfkit to use the binary
         config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
@@ -334,20 +325,19 @@ if ss.stage > 0:
             st.download_button(label="Download", data=pdf_file, file_name=pdf_file_path, mime="application/pdf")
         st.markdown("## 4. A few comments about your resume")
         st.write(comments_resume)
-        # Get score
+        # Get score between resume and job description using vector embeddings and cosine similarity
         score = get_score(keywords_re, keywords_jd)*100
         st.markdown("## 5. Performance analysis")
         
-        # # Create two columns with the specified width
         col1, col2 = st.columns([0.4, 0.6])
 
-        # Determine the bar color based on the score value
+        # Set the color of the gauge bar based on the score
         if score < 70:
-            bar_color = "#e4002b"  # Cherry red
+            bar_color = "#e4002b"
         elif 70 <= score < 85:
-            bar_color = "#ffbb00"  # Caterpillar yellow
+            bar_color = "#ffbb00"
         else:
-            bar_color = "#006400"  # Dark green
+            bar_color = "#006400"
 
         # Plot gauge in the left column
         with col1:
@@ -393,9 +383,9 @@ if ss.stage > 0:
             resume_annotations = []
             for skill in job_skills:
                 if skill in resume_skills:
-                    resume_annotations.append((skill, "match", "#4CAF50"))  # Green for match
+                    resume_annotations.append((skill, "match", "#4CAF50"))
                 else:
-                    resume_annotations.append((skill, "not matched", "#FF6347"))  # Red for non-match
+                    resume_annotations.append((skill, "not matched", "#FF6347"))
 
             # Display the annotated resume skills
             annotated_text(*resume_annotations)
@@ -406,8 +396,8 @@ bg_logo = Image.open("assets/images/bganal_bw.png")
 
 def image_to_base64(image):
     buffered = io.BytesIO()
-    image.save(buffered, format="PNG")  # Save as PNG format
-    return base64.b64encode(buffered.getvalue()).decode()  # Convert to base64
+    image.save(buffered, format="PNG")
+    return base64.b64encode(buffered.getvalue()).decode()
 
 st.markdown(
     f'<br><div style="text-align: center;"><img src="data:image/png;base64,{image_to_base64(bg_logo)}" width="130"></div>',
