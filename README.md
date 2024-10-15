@@ -81,7 +81,8 @@ python -m spacy download en_core_web_sm
 ├── assets/images/           # Image assets for the app  
 ├── css/                     # Custom CSS for styling  
 ├── data/                    # Folder for storing input and output files  
-├── app.py                   # Streamlit application file  
+├── app.py                   # Streamlit application file
+├── LICENSE.md               # Project LICENSE file
 ├── packages.txt             # List of system-level packages for deployment  
 ├── requirements.txt         # Python dependencies list  
 └── README.md                # Project README file
