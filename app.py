@@ -153,8 +153,8 @@ The goal is to ensure the resume mirrors the job description's wording and relev
 Your responsibilities include:
 
 1. **Keyword Matching**:
-   - Create a new version of the resume, using keywords, skills and extracts from the job description, ensuring that the resume mirrors the language of the job description.
-   - Consider the candidate experience and qualification and think about how to incorporate the keywords and skills naturally into the resume.
+   - Create a new version of the resume, using keywords and extracts from the job description, ensuring that the resume mirrors the language of the job description.
+   - You are going to receive a list of skills that should be included in the resume. Ensure that these skills are naturally integrated into the resume.
    - Modify the wording to match the job description as closely as possible, considering the candidate's experience and qualifications. Example:
       - If the resume mentions "dashboard" and the job description uses "data visualization", you should replace "dashboard" with "data visualization." or at least add "data visualization" to the resume.
    - You can modify any section of the resume to better align with the job description.
@@ -215,7 +215,7 @@ Please extract the relevant information from the following resume text and adjus
 **Keywords extracted from Job Description:**
 {keywords}
 
-**Skills List from Job Description:**
+**Skills to include in the resume:**
 {skills}
 """
     }
@@ -265,130 +265,134 @@ if ss.stage > 0:
         keywords_jd = extract_keywords(job_description)
         set_kw_jd = set(keywords_jd)
         job_skills = extract_skills(job_description)
+        resume_skills = extract_skills(resume_text)
         keywords_re = extract_keywords(resume_text)
+        missing_skills = set(job_skills) - set(resume_skills)
+        skills_include = st.multiselect("Here's the list of missing keywords in your resume. Select which one you want to include.", missing_skills, missing_skills)
+        st.button("**OK**", on_click=set_stage, args = (2,))
+        if ss.stage > 1:
+            messages = get_messages(resume_text, job_description, keywords_jd, skills_include)
+            improved_response = get_cohere_response(messages)
+            improved_resume, comments_resume = get_resume_and_comments(improved_response)
 
-        messages = get_messages(resume_text, job_description, keywords_jd, job_skills)
-        improved_response = get_cohere_response(messages)
-        improved_resume, comments_resume = get_resume_and_comments(improved_response)
 
-
-        st.markdown(
-            """
-            <style>
-            .resume-container {
-                background-color: #f7f7f7;
-                padding: 15px;
-                border-radius: 10px;
-                font-family: Arial, sans-serif;
-            }
-            </style>
-            """, 
-            unsafe_allow_html=True
-)
-
-        st.markdown("## 3. Your improved resume")
-
-        st.markdown(
-    '''
-    <style>
-    .streamlit-expanderHeader {
-        background-color: rgb(250, 250, 250);
-        color: black; # Adjust this for expander header color
-    }
-    .streamlit-expanderContent {
-        background-color: rgb(250, 250, 250);
-        color: black; # Expander content color
-    }
-    </style>
-    ''',
-    unsafe_allow_html=True
-)
-        with st.expander("Your fine-tuned resume is ready! Hit the **Download** button below to get it.",expanded=True):
-            st.markdown(improved_resume)
-        # Convert the Markdown to HTML
-        html_body = markdown2.markdown(improved_resume)
-        wkhtmltopdf_path = subprocess.check_output(['which', 'wkhtmltopdf'], universal_newlines=True).strip()
-        # Configure pdfkit to use the binary
-        config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
-        options = {
-        'margin-top': '15mm',
-        'margin-bottom': '15mm',
-        'margin-left': '15mm',
-        'margin-right': '15mm',
-        'encoding': 'UTF-8'
-        }
-        pdf_file_path = f"{uploaded_file.name}_improved.pdf"
-        # Generate PDF from HTML
-        pdfkit.from_string(html_body, pdf_file_path, options=options)
-        # Provide the PDF as a download
-        with open(pdf_file_path, 'rb') as pdf_file:
-            st.download_button(label="Download", data=pdf_file, file_name=pdf_file_path, mime="application/pdf")
-        st.markdown("## 4. A few comments about your resume")
-        st.write(comments_resume)
-        # Get score between resume and job description using vector embeddings and cosine similarity
-        score = get_score(keywords_re, keywords_jd)*100
-        st.markdown("## 5. Performance analysis")
-        
-        col1, col2 = st.columns([0.4, 0.6])
-
-        # Set the color of the gauge bar based on the score
-        if score < 70:
-            bar_color = "#e4002b"
-        elif 70 <= score < 85:
-            bar_color = "#ffbb00"
-        else:
-            bar_color = "#006400"
-
-        # Plot gauge in the left column
-        with col1:
-            st.markdown("### Resume score")
-            # Create a Plotly gauge figure
-            fig = go.Figure(go.Indicator(
-                mode="gauge+number",
-                value=score,
-                number={'suffix': "%", 'font': {'size': 36}},
-                gauge={
-                    'axis': {
-                        'range': [0, 100],
-                        'tickmode': "array",
-                        'tickvals': [0, 25, 50, 75, 100],
-                        'ticktext': ["0%", "25%", "50%", "75%", "100%"] 
-                    },
-                    'bar': {'color': bar_color}, 
-                    'bgcolor': "white",
-                    'borderwidth': 2,
-                    'bordercolor': "black"
+            st.markdown(
+                """
+                <style>
+                .resume-container {
+                    background-color: #f7f7f7;
+                    padding: 15px;
+                    border-radius: 10px;
+                    font-family: Arial, sans-serif;
                 }
-            ))
+                </style>
+                """, 
+                unsafe_allow_html=True
+    )
 
-            # Define figure size in the layout
-            fig.update_layout(
-                width=400,
-                height=180,
-                margin=dict(l=30, r=40, t=20, b=5),
-            )
+            st.markdown("## 3. Your improved resume")
 
-            # Display the gauge in Streamlit
-            st.plotly_chart(fig)
+            st.markdown(
+        '''
+        <style>
+        .streamlit-expanderHeader {
+            background-color: rgb(250, 250, 250);
+            color: black; # Adjust this for expander header color
+        }
+        .streamlit-expanderContent {
+            background-color: rgb(250, 250, 250);
+            color: black; # Expander content color
+        }
+        </style>
+        ''',
+        unsafe_allow_html=True
+    )
+            with st.expander("Your fine-tuned resume is ready! Hit the **Download** button below to get it.",expanded=True):
+                st.markdown(improved_resume)
+            # Convert the Markdown to HTML
+            html_body = markdown2.markdown(improved_resume)
+            wkhtmltopdf_path = subprocess.check_output(['which', 'wkhtmltopdf'], universal_newlines=True).strip()
+            # Configure pdfkit to use the binary
+            config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
+            options = {
+            'margin-top': '15mm',
+            'margin-bottom': '15mm',
+            'margin-left': '15mm',
+            'margin-right': '15mm',
+            'encoding': 'UTF-8'
+            }
+            pdf_file_path = f"{uploaded_file.name}_improved.pdf"
+            # Generate PDF from HTML
+            pdfkit.from_string(html_body, pdf_file_path, options=options)
+            # Provide the PDF as a download
+            with open(pdf_file_path, 'rb') as pdf_file:
+                st.download_button(label="Download", data=pdf_file, file_name=pdf_file_path, mime="application/pdf")
+            st.markdown("## 4. A few comments about your resume")
+            st.write(comments_resume)
+            # Get score between resume and job description using vector embeddings and cosine similarity
+            score = get_score(keywords_re, keywords_jd)*100
+            st.markdown("## 5. Performance analysis")
+            
+            col1, col2 = st.columns([0.4, 0.6])
 
-        # Skills Comparison in the right column
-        with col2:
-            # Skills Comparison
-            st.markdown("### Skills matching")
+            # Set the color of the gauge bar based on the score
+            if score < 70:
+                bar_color = "#e4002b"
+            elif 70 <= score < 85:
+                bar_color = "#ffbb00"
+            else:
+                bar_color = "#006400"
 
-            # Extract skills from the resume and job description
-            resume_skills = extract_skills(improved_resume)
+            # Plot gauge in the left column
+            with col1:
+                st.markdown("### Resume score")
+                # Create a Plotly gauge figure
+                fig = go.Figure(go.Indicator(
+                    mode="gauge+number",
+                    value=score,
+                    number={'suffix': "%", 'font': {'size': 36}},
+                    gauge={
+                        'axis': {
+                            'range': [0, 100],
+                            'tickmode': "array",
+                            'tickvals': [0, 25, 50, 75, 100],
+                            'ticktext': ["0%", "25%", "50%", "75%", "100%"] 
+                        },
+                        'bar': {'color': bar_color}, 
+                        'bgcolor': "white",
+                        'borderwidth': 2,
+                        'bordercolor': "black"
+                    }
+                ))
 
-            # Use annotated_text to highlight matches in green
-            resume_annotations = []
-            for skill in job_skills:
-                if skill in resume_skills:
-                    resume_annotations.append((skill, "match", "#4CAF50"))
-                else:
-                    resume_annotations.append((skill, "not matched", "#FF6347"))
+                # Define figure size in the layout
+                fig.update_layout(
+                    width=400,
+                    height=180,
+                    margin=dict(l=30, r=40, t=20, b=5),
+                )
 
-            # Display the annotated resume skills
-            annotated_text(*resume_annotations)
+                # Display the gauge in Streamlit
+                st.plotly_chart(fig)
+
+            # Skills Comparison in the right column
+            with col2:
+                # Skills Comparison
+                st.markdown("### Skills matching")
+
+                # Extract skills from the resume and job description
+                resume_skills = extract_skills(improved_resume)
+
+                # Use annotated_text to highlight matches in green
+                resume_annotations = []
+                for skill in job_skills:
+                    if skill in resume_skills:
+                        resume_annotations.append((skill, "match", "#4CAF50"))
+                    else:
+                        resume_annotations.append((skill, "not matched", "#FF6347"))
+
+                # Display the annotated resume skills
+                annotated_text(*resume_annotations)
     else:
         st.error("Please upload a resume and paste a job description.")
 
