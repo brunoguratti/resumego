@@ -140,7 +140,7 @@ def get_cohere_response(messages, model="command-r-plus-08-2024", temperature=0.
     return response.message.content[0].text
 
 @st.cache_data(show_spinner=False)
-def get_messages(resume_text, job_description, keywords, skills):
+def get_messages(resume_text, job_description, keywords, skills_keep, skills_add):
     """Prepare the messages for the LLM model."""
 
     messages = [
@@ -154,7 +154,7 @@ Your responsibilities include:
 
 1. **Keyword Matching**:
    - Create a new version of the resume, using keywords and extracts from the job description, ensuring that the resume mirrors the language of the job description.
-   - You are going to receive a list of skills. Ensure that these words are naturally integrated into the resume, at least in one of these sections: summary, work experience, or projects.
+   - You are going to receive a list of skills, to keep and to add. Ensure that these words are naturally integrated into the resume, at least in one of these sections: summary, work experience, or projects.
    - Modify the wording to match the job description as closely as possible, considering the candidate's experience and qualifications. Example:
       - If the resume mentions "dashboard" and the job description uses "data visualization", you should replace "dashboard" with "data visualization." or at least add "data visualization" to the resume.
    - You can modify any section of the resume to better align with the job description.
@@ -215,8 +215,11 @@ Please extract the relevant information from the following resume text and adjus
 **Keywords extracted from Job Description:**
 {keywords}
 
+**Skills to keep in the resume:**
+{skills_keep}
+
 **Skills to include in the resume:**
-{skills}
+{skills_add}
 """
     }
 ]
@@ -272,7 +275,7 @@ if ss.stage > 0:
         skills_include = st.multiselect("", missing_skills, missing_skills)
         st.button("Continue", on_click=set_stage, args = (2,))
         if ss.stage > 1:
-            messages = get_messages(resume_text, job_description, keywords_jd, skills_include)
+            messages = get_messages(resume_text, job_description, keywords_jd, resume_skills, skills_include)
             improved_response = get_cohere_response(messages)
             improved_resume, comments_resume = get_resume_and_comments(improved_response)
 
