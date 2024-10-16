@@ -366,67 +366,68 @@ if ss.stage > 0:
             # Get score between resume and job description using vector embeddings and cosine similarity
             score = get_overall_score(improved_resume, job_description)
             st.markdown("## 6. Performance analysis")
+            st.write(f"Your resume matches the job description by {score:.2f}%.")
             
-            col1, col2 = st.columns([0.4, 0.6])
+            # col1, col2 = st.columns([0.4, 0.6])
 
-            # Set the color of the gauge bar based on the score
-            if score < 70:
-                bar_color = "#e4002b"
-            elif 70 <= score < 85:
-                bar_color = "#ffbb00"
-            else:
-                bar_color = "#006400"
+            # # Set the color of the gauge bar based on the score
+            # if score < 70:
+            #     bar_color = "#e4002b"
+            # elif 70 <= score < 85:
+            #     bar_color = "#ffbb00"
+            # else:
+            #     bar_color = "#006400"
 
-            # Plot gauge in the left column
-            with col1:
-                st.markdown("### Resume score")
-                # Create a Plotly gauge figure
-                fig = go.Figure(go.Indicator(
-                    mode="gauge+number",
-                    value=score,
-                    number={'suffix': "%", 'font': {'size': 36}},
-                    gauge={
-                        'axis': {
-                            'range': [0, 100],
-                            'tickmode': "array",
-                            'tickvals': [0, 25, 50, 75, 100],
-                            'ticktext': ["0%", "25%", "50%", "75%", "100%"] 
-                        },
-                        'bar': {'color': bar_color}, 
-                        'bgcolor': "white",
-                        'borderwidth': 2,
-                        'bordercolor': "black"
-                    }
-                ))
+            # # Plot gauge in the left column
+            # with col1:
+            #     st.markdown("### Resume score")
+            #     # Create a Plotly gauge figure
+            #     fig = go.Figure(go.Indicator(
+            #         mode="gauge+number",
+            #         value=score,
+            #         number={'suffix': "%", 'font': {'size': 36}},
+            #         gauge={
+            #             'axis': {
+            #                 'range': [0, 100],
+            #                 'tickmode': "array",
+            #                 'tickvals': [0, 25, 50, 75, 100],
+            #                 'ticktext': ["0%", "25%", "50%", "75%", "100%"] 
+            #             },
+            #             'bar': {'color': bar_color}, 
+            #             'bgcolor': "white",
+            #             'borderwidth': 2,
+            #             'bordercolor': "black"
+            #         }
+            #     ))
 
-                # Define figure size in the layout
-                fig.update_layout(
-                    width=400,
-                    height=180,
-                    margin=dict(l=30, r=40, t=20, b=5),
-                )
+            #     # Define figure size in the layout
+            #     fig.update_layout(
+            #         width=400,
+            #         height=180,
+            #         margin=dict(l=30, r=40, t=20, b=5),
+            #     )
 
-                # Display the gauge in Streamlit
-                st.plotly_chart(fig)
+            #     # Display the gauge in Streamlit
+            #     st.plotly_chart(fig)
 
-            # Skills Comparison in the right column
-            with col2:
-                # Skills Comparison
-                st.markdown("### Skills matching")
+            # # Skills Comparison in the right column
+            # with col2:
+            #     # Skills Comparison
+            #     st.markdown("### Skills matching")
 
-                # Extract skills from the resume and job description
-                resume_skills = extract_skills(improved_resume)
+            #     # Extract skills from the resume and job description
+            #     resume_skills = extract_skills(improved_resume)
 
-                # Use annotated_text to highlight matches in green
-                resume_annotations = []
-                for skill in job_skills:
-                    if skill in resume_skills:
-                        resume_annotations.append((skill, "match", "#4CAF50"))
-                    else:
-                        resume_annotations.append((skill, "not matched", "#FF6347"))
+            #     # Use annotated_text to highlight matches in green
+            #     resume_annotations = []
+            #     for skill in job_skills:
+            #         if skill in resume_skills:
+            #             resume_annotations.append((skill, "match", "#4CAF50"))
+            #         else:
+            #             resume_annotations.append((skill, "not matched", "#FF6347"))
 
-                # Display the annotated resume skills
-                annotated_text(*resume_annotations)
+            #     # Display the annotated resume skills
+            #     annotated_text(*resume_annotations)
     else:
         st.error("Please upload a resume and paste a job description.")
 
