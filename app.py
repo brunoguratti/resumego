@@ -118,7 +118,7 @@ def get_overall_score(resume_text, job_description_text):
     # Calculate skill ratio
     skill_ratio = calculate_skill_ratio(resume_skills, job_description_skills)
 
-    # Weighted ATS score (60% keywords, 40% skills)
+    # Weighted ATS score (50% keywords, 50% skills)
     ats_score = (0.50 * keyword_match_score) + (0.50 * skill_ratio)
 
     return ats_score
@@ -233,7 +233,7 @@ Experienced software engineer with 5+ years in backend development...
 - AWS Certified Solutions Architect - Associate (2019)   
 
 3. **Resume Feedback**:
-   - At the end of the resume, add a delimiter (---) and provide feedback, considering the resume's new version and the job description:
+   - At the end of the resume, add a delimiter (---) and provide feedback. Consider the revised resume and the job description for the analysis.
      - ### Strong points: where the resume aligns well with the job description.
      - ### Weak points: what are the weaknesses that the candidate needs to address to close gaps in qualifications or skills.
      - ### Suggestions for improvement: providing constructive feedback on how the candidate can enhance their resume to better match the job requirements.
