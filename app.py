@@ -26,6 +26,7 @@ import numpy as np
 from PIL import Image
 
 
+
 # Download the spaCy model
 nltk.download('stopwords')
 nltk.download('punkt_tab')
@@ -42,19 +43,17 @@ def extract_text_from_pdf(pdf):
         text += reader.pages[page].extract_text()
     return text
 
-def clean_text(text):
-    """Clean the input text by removing stopwords, punctuation, and non-alphabetical characters."""
+def preprocess_text(text):
     tokens = word_tokenize(text.lower())
+    tokens = [word for word in tokens if word.isalpha()]
     stop_words = set(stopwords.words('english'))
-    cleaned_tokens = [word for word in tokens if word not in stop_words and re.match(r'^[^\W\d_]+$', word, re.UNICODE)]
-    
-    return ' '.join(cleaned_tokens)
+    tokens = [word for word in tokens if word not in stop_words]
+    return tokens
 
 def extract_keywords(text):
     """Extract keywords from the input text using RAKE."""
-    r = Rake()
-    cleaned_text = clean_text(text)
-    r.extract_keywords_from_text(cleaned_text)
+    r = Rake(stopwords=stopwords.words('english'))
+    r.extract_keywords_from_text(text)
     return r.get_ranked_phrases()
 
 def extract_skills(text):
@@ -62,7 +61,7 @@ def extract_skills(text):
     with open('data/skills.json') as f:
         skills_list = json.load(f)
     
-    text = clean_text(text)
+    text = preprocess_text(text)
 
     nlp = spacy.load("en_core_web_sm")
     skill_patterns = list(nlp.pipe(skills_list))
@@ -85,6 +84,40 @@ def extract_skills(text):
     unique_skills = set(ent.text.lower() for ent in doc.ents if ent.label_ == "SKILL")
     return list(unique_skills)
 
+@st.cache_data(show_spinner=False)
+def calculate_skill_ratio(resume_skills, job_description_skills):
+    """Calculate the skill matching ratio between a resume and a job description."""
+    matched_skills = set(resume_skills).intersection(set(job_description_skills))
+    total_job_skills = len(job_description_skills)
+    skill_ratio = (len(matched_skills) / total_job_skills) * 100 if total_job_skills > 0 else 0
+    return skill_ratio
+
+@st.cache_data(show_spinner=False)
+def get_overall_score(resume_text, job_description_text):
+    """Calculate the ATS score between a resume and a job description with weighted components."""
+    # Extract keywords from both resume and job description
+    resume_keywords = extract_keywords(resume_text)
+    job_description_keywords = extract_keywords(job_description_text)
+
+    # Preprocess extracted keywords
+    resume_tokens = preprocess_text(' '.join(resume_keywords))
+    job_tokens = preprocess_text(' '.join(job_description_keywords))
+
+    # Extract skills from both resume and job description
+    resume_skills = extract_skills(resume_text)
+    job_description_skills = extract_skills(job_description_text)
+
+    # Calculate matching score for keywords
+    keyword_match_score = get_kw_score(resume_tokens, job_tokens)
+
+    # Calculate skill ratio
+    skill_ratio = calculate_skill_ratio(resume_skills, job_description_skills)
+
+    # Weighted ATS score (60% keywords, 40% skills)
+    ats_score = (0.60 * keyword_match_score) + (0.40 * skill_ratio)
+
+    return ats_score*100
+
 def get_resume_and_comments(text, delimiter='---'):
     """Extract the resume and comments from the improved response."""
     match = re.match(r'^(.*?)' + re.escape(delimiter) + r'(.*)', text, re.DOTALL)
@@ -93,7 +126,7 @@ def get_resume_and_comments(text, delimiter='---'):
     return None, None
 
 @st.cache_data(show_spinner=False)
-def get_score(resume_string, job_description_string):
+def get_kw_score(resume_string, job_description_string):
     """
     Calculate the similarity score between a resume and a job description using pre-trained embeddings.
     """
@@ -267,10 +300,8 @@ st.button("**Fine-tune my resume**", on_click=set_stage, args = (1,))
 if ss.stage > 0:
     if resume_text and job_description:
         keywords_jd = extract_keywords(job_description)
-        set_kw_jd = set(keywords_jd)
         job_skills = extract_skills(job_description)
         resume_skills = extract_skills(resume_text)
-        keywords_re = extract_keywords(resume_text)
         missing_skills = [skill for skill in job_skills if skill not in resume_skills]
         st.markdown("## 3. Select the skills to add to your resume")
         skills_include = st.multiselect("", missing_skills, missing_skills)
@@ -335,8 +366,7 @@ if ss.stage > 0:
             st.markdown("## 5. A few comments about your resume")
             st.write(comments_resume)
             # Get score between resume and job description using vector embeddings and cosine similarity
-            improved_resume_kw = extract_keywords(improved_resume)
-            score = get_score(improved_resume_kw, keywords_jd)*100
+            score = get_overall_score(improved_resume, job_description)
             st.markdown("## 6. Performance analysis")
             
             col1, col2 = st.columns([0.4, 0.6])
