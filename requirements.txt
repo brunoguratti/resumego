@@ -13,3 +13,4 @@ markdown2
 st-annotated-text
 cohere
 pillow
+scikit-learn

@@ -24,7 +24,7 @@ import markdown2
 import cohere
 import numpy as np
 from PIL import Image
-
+from sklearn.metrics.pairwise import cosine_similarity
 
 
 # Download the spaCy model
@@ -137,10 +137,10 @@ def get_kw_score(resume_string, job_description_string):
     resume_embedding = emb_model.encode(resume_string, convert_to_tensor=True, normalize_embeddings=True)
     jd_embedding = emb_model.encode(job_description_string, convert_to_tensor=True, normalize_embeddings=True)
     
-    # Ensure both embeddings are flattened and normalized
-    cosine_similarity = np.dot(resume_embedding, jd_embedding.T)
+    # Calculate cosine similarity and extract the scalar value
+    similarity_score = cosine_similarity([resume_embedding], [jd_embedding])
     
-    return cosine_similarity.item()
+    return similarity_score[0][0]
 
 @st.cache_data(show_spinner=False)
 def get_gpt_response(messages, model="gpt-4o-mini", temperature=0.2, top_p=0.1):
