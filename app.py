@@ -61,7 +61,8 @@ def extract_skills(text):
     with open('data/skills.json') as f:
         skills_list = json.load(f)
     
-    text = preprocess_text(' '.join(text))
+    processed_text = preprocess_text(text)
+    processed_text = ' '.join(processed_text)
 
     nlp = spacy.load("en_core_web_sm")
     skill_patterns = list(nlp.pipe(skills_list))
@@ -80,7 +81,7 @@ def extract_skills(text):
 
     # Add the custom component to the pipeline after the NER component
     nlp.add_pipe("skill_component", after="ner")
-    doc = nlp(text)
+    doc = nlp(processed_text)
     unique_skills = set(ent.text.lower() for ent in doc.ents if ent.label_ == "SKILL")
     return list(unique_skills)
 
