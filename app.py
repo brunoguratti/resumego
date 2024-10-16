@@ -335,7 +335,8 @@ if ss.stage > 0:
             st.markdown("## 5. A few comments about your resume")
             st.write(comments_resume)
             # Get score between resume and job description using vector embeddings and cosine similarity
-            score = get_score(keywords_re, keywords_jd)*100
+            improved_resume_kw = extract_keywords(improved_resume)
+            score = get_score(improved_resume_kw, keywords_jd)*100
             st.markdown("## 6. Performance analysis")
             
             col1, col2 = st.columns([0.4, 0.6])
