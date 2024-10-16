@@ -119,7 +119,7 @@ def get_overall_score(resume_text, job_description_text):
     skill_ratio = calculate_skill_ratio(resume_skills, job_description_skills)
 
     # Weighted ATS score (60% keywords, 40% skills)
-    ats_score = (0.70 * keyword_match_score) + (0.30 * skill_ratio)
+    ats_score = (0.50 * keyword_match_score) + (0.50 * skill_ratio)
 
     return ats_score
 
