@@ -135,9 +135,12 @@ def get_kw_score(resume_string, job_description_string):
     resume_embedding = emb_model.encode(resume_string)
     jd_embedding = emb_model.encode(job_description_string)
 
-    similarity = np.dot(resume_embedding, jd_embedding.T) / (np.linalg.norm(resume_embedding) * np.linalg.norm(jd_embedding))
+    resume_embedding = np.array(resume_embedding).flatten()
+    jd_embedding = np.array(jd_embedding).flatten()
 
-    return similarity
+    cosine_similarity = np.dot(resume_embedding, jd_embedding) / (np.linalg.norm(resume_embedding) * np.linalg.norm(jd_embedding))
+
+    return cosine_similarity
 
 @st.cache_data(show_spinner=False)
 def get_gpt_response(messages, model="gpt-4o-mini", temperature=0.2, top_p=0.1):
