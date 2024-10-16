@@ -366,7 +366,7 @@ if ss.stage > 0:
             # Get score between resume and job description using vector embeddings and cosine similarity
             score = get_overall_score(improved_resume, job_description)
             st.markdown("## 6. Performance analysis")
-            st.write(f"Your resume matches the job description by {score:.2f}%.")
+            st.write(f"Your resume matches the job description by {score}")
             
             # col1, col2 = st.columns([0.4, 0.6])
 
