@@ -104,6 +104,10 @@ def get_overall_score(resume_text, job_description_text):
     resume_tokens = preprocess_text(' '.join(resume_keywords))
     job_tokens = preprocess_text(' '.join(job_description_keywords))
 
+    # Transform in a single string
+    resume_tokens = ' '.join(resume_tokens)
+    job_tokens = ' '.join(job_tokens)
+
     # Extract skills from both resume and job description
     resume_skills = extract_skills(resume_text)
     job_description_skills = extract_skills(job_description_text)
