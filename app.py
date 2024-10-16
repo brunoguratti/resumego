@@ -108,8 +108,8 @@ def get_overall_score(resume_text, job_description_text):
     resume_skills = extract_skills(resume_text)
     job_description_skills = extract_skills(job_description_text)
 
-    st.write(f"Resume keywords: {resume_keywords}")
-    st.write(f"Job description keywords: {job_description_keywords}")
+    st.write(f"Resume keywords: {resume_tokens}")
+    st.write(f"Job description keywords: {job_tokens}")
     st.write(f"Resume skills: {resume_skills}")
     st.write(f"Job description skills: {job_description_skills}")
 
