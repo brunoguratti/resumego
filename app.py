@@ -131,7 +131,7 @@ def get_kw_score(resume_string, job_description_string):
     """
     Calculate the similarity score between a resume and a job description using pre-trained embeddings.
     """
-    emb_model = SentenceTransformer("BAAI/bge-m3")
+    emb_model = SentenceTransformer("all-mpnet-base-v2")
     resume_embedding = emb_model.encode(resume_string)
     jd_embedding = emb_model.encode(job_description_string)
 
