@@ -135,7 +135,7 @@ def get_kw_score(resume_string, job_description_string):
     resume_embedding = emb_model.encode(resume_string)
     jd_embedding = emb_model.encode(job_description_string)
 
-    similarity = resume_embedding @ jd_embedding.T
+    similarity = np.dot(resume_embedding, jd_embedding.T) / (np.linalg.norm(resume_embedding) * np.linalg.norm(jd_embedding))
 
     return similarity
 
