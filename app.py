@@ -154,7 +154,7 @@ Your responsibilities include:
 
 1. **Keyword Matching**:
    - Create a new version of the resume, using keywords and extracts from the job description, ensuring that the resume mirrors the language of the job description.
-   - You are going to receive a list of skills that should be included in the resume. Ensure that these skills are naturally integrated into the resume.
+   - You are going to receive a list of skills that should be included in the resume. Ensure that these skills are naturally integrated into the resume, not only in the skills section but also in the work experience, summary or project descriptions.
    - Modify the wording to match the job description as closely as possible, considering the candidate's experience and qualifications. Example:
       - If the resume mentions "dashboard" and the job description uses "data visualization", you should replace "dashboard" with "data visualization." or at least add "data visualization" to the resume.
    - You can modify any section of the resume to better align with the job description.
@@ -267,7 +267,7 @@ if ss.stage > 0:
         job_skills = extract_skills(job_description)
         resume_skills = extract_skills(resume_text)
         keywords_re = extract_keywords(resume_text)
-        missing_skills = set(job_skills) - set(resume_skills)
+        missing_skills = [skill for skill in job_skills if skill not in resume_skills]
         st.markdown("## 3. Select the skills to add to your resume")
         skills_include = st.multiselect("", missing_skills, missing_skills)
         st.button("Continue", on_click=set_stage, args = (2,))
