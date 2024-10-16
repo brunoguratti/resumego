@@ -61,7 +61,7 @@ def extract_skills(text):
     with open('data/skills.json') as f:
         skills_list = json.load(f)
     
-    text = preprocess_text(text)
+    text = preprocess_text(' '.join(text))
 
     nlp = spacy.load("en_core_web_sm")
     skill_patterns = list(nlp.pipe(skills_list))
