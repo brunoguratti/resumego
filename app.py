@@ -108,6 +108,11 @@ def get_overall_score(resume_text, job_description_text):
     resume_skills = extract_skills(resume_text)
     job_description_skills = extract_skills(job_description_text)
 
+    st.write(f"Resume keywords: {resume_keywords}")
+    st.write(f"Job description keywords: {job_description_keywords}")
+    st.write(f"Resume skills: {resume_skills}")
+    st.write(f"Job description skills: {job_description_skills}")
+
     # Calculate matching score for keywords
     keyword_match_score = get_kw_score(resume_tokens, job_tokens)
 
@@ -135,8 +140,8 @@ def get_kw_score(resume_string, job_description_string):
     resume_embedding = emb_model.encode(resume_string)
     jd_embedding = emb_model.encode(job_description_string)
 
-    resume_embedding = np.array(resume_embedding).flatten()
-    jd_embedding = np.array(jd_embedding).flatten()
+    resume_embedding = np.array(resume_embedding)
+    jd_embedding = np.array(jd_embedding)
 
     cosine_similarity = np.dot(resume_embedding, jd_embedding) / (np.linalg.norm(resume_embedding) * np.linalg.norm(jd_embedding))
 
