@@ -134,11 +134,15 @@ def get_kw_score(resume_string, job_description_string):
     emb_model = SentenceTransformer("BAAI/bge-base-en")
     
     # Get sentence embeddings
-    resume_embedding = emb_model.encode(resume_string, convert_to_tensor=True, normalize_embeddings=True)
-    jd_embedding = emb_model.encode(job_description_string, convert_to_tensor=True, normalize_embeddings=True)
+    resume_embedding = emb_model.encode(resume_string)
+    jd_embedding = emb_model.encode(job_description_string)
+    
+    # Ensure embeddings are 2D
+    resume_embedding = resume_embedding.reshape(1, -1)
+    jd_embedding = jd_embedding.reshape(1, -1)
     
     # Calculate cosine similarity and extract the scalar value
-    similarity_score = cosine_similarity([resume_embedding], [jd_embedding])
+    similarity_score = cosine_similarity(resume_embedding, jd_embedding)
     
     return similarity_score[0][0]
 
