@@ -24,7 +24,7 @@ import markdown2
 import cohere
 import numpy as np
 from PIL import Image
-from sklearn.metrics.pairwise import cosine_similarity
+
 
 
 # Download the spaCy model
@@ -131,20 +131,13 @@ def get_kw_score(resume_string, job_description_string):
     """
     Calculate the similarity score between a resume and a job description using pre-trained embeddings.
     """
-    emb_model = SentenceTransformer("BAAI/bge-base-en")
-    
-    # Get sentence embeddings
+    emb_model = SentenceTransformer("BAAI/bge-m3")
     resume_embedding = emb_model.encode(resume_string)
     jd_embedding = emb_model.encode(job_description_string)
-    
-    # Ensure embeddings are 2D
-    resume_embedding = resume_embedding.reshape(1, -1)
-    jd_embedding = jd_embedding.reshape(1, -1)
-    
-    # Calculate cosine similarity and extract the scalar value
-    similarity_score = cosine_similarity(resume_embedding, jd_embedding)
-    
-    return similarity_score[0][0]
+
+    similarity = resume_embedding @ jd_embedding.T
+
+    return similarity
 
 @st.cache_data(show_spinner=False)
 def get_gpt_response(messages, model="gpt-4o-mini", temperature=0.2, top_p=0.1):
@@ -309,7 +302,6 @@ if ss.stage > 0:
         resume_skills = extract_skills(resume_text)
         missing_skills = [skill for skill in job_skills if skill not in resume_skills]
         st.markdown("## 3. Select the skills to add to your resume")
-        st.write("Below are the skills extracted from the job description that are not present in your resume. Select the ones you want to include.")
         skills_include = st.multiselect("", missing_skills, missing_skills)
         st.button("Continue", on_click=set_stage, args = (2,))
         if ss.stage > 1:
