@@ -428,7 +428,7 @@ if ss.stage > 0:
                 resume_annotations = []
                 for skill in job_skills:
                     if skill in resume_skills:
-                        resume_annotations.appenƒ√d((skill, "match", "#4CAF50"))
+                        resume_annotations.append((skill, "match", "#4CAF50"))
                     else:
                         resume_annotations.append((skill, "not matched", "#FF6347"))
 
