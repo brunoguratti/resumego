@@ -2,6 +2,7 @@ import subprocess
 import base64
 import io
 import streamlit as st
+from annotated_text import annotated_text
 from streamlit import session_state as ss
 import PyPDF2
 import spacy
@@ -14,7 +15,6 @@ import nltk
 from nltk.corpus import stopwords
 from nltk import word_tokenize
 from sentence_transformers import SentenceTransformer
-from annotated_text import annotated_text
 from openai import OpenAI
 from rake_nltk import Rake
 import json
@@ -428,7 +428,7 @@ if ss.stage > 0:
                 resume_annotations = []
                 for skill in job_skills:
                     if skill in resume_skills:
-                        resume_annotations.append((skill, "match", "#4CAF50"))
+                        resume_annotations.appenƒ√d((skill, "match", "#4CAF50"))
                     else:
                         resume_annotations.append((skill, "not matched", "#FF6347"))
 
