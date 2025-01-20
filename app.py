@@ -417,7 +417,7 @@ if ss.stage > 0:
 
             # Skills Comparison in the right column
             with col2:
-
+                st.write()
     else:
         st.error("Please upload a resume and paste a job description.")
 
