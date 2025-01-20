@@ -10,6 +10,7 @@ jsonlib-python3
 plotly
 pdfkit
 markdown2
+htbuilder
 st-annotated-text
 cohere
 pillow
