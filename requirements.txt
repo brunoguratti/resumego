@@ -10,8 +10,8 @@ jsonlib-python3
 plotly
 pdfkit
 markdown2
-https://github.com/tvst/htbuilder
-https://github.com/tvst/st-annotated-text
+htbuilder @ git+https://github.com/tvst/htbuilder.git
+st-annotated-text @ git+https://github.com/tvst/st-annotated-text.git
 cohere
 pillow
 scikit-learn
