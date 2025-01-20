@@ -2,7 +2,6 @@ import subprocess
 import base64
 import io
 import streamlit as st
-from annotated_text import annotated_text
 from streamlit import session_state as ss
 import PyPDF2
 import spacy
@@ -418,22 +417,7 @@ if ss.stage > 0:
 
             # Skills Comparison in the right column
             with col2:
-                # Skills Comparison
-                st.markdown("### Skills matching")
 
-                # Extract skills from the resume and job description
-                resume_skills = extract_skills(improved_resume)
-
-                # Use annotated_text to highlight matches in green
-                resume_annotations = []
-                for skill in job_skills:
-                    if skill in resume_skills:
-                        resume_annotations.append((skill, "match", "#4CAF50"))
-                    else:
-                        resume_annotations.append((skill, "not matched", "#FF6347"))
-
-                # Display the annotated resume skills
-                annotated_text(*resume_annotations)
     else:
         st.error("Please upload a resume and paste a job description.")
 
